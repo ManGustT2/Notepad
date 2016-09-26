@@ -1,4 +1,4 @@
-package notepad.mangust.com.notepad;
+package notepad.mangust.com.notepad.view.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class NoteActivity extends AppCompatActivity {
+import notepad.mangust.com.notepad.R;
+import notepad.mangust.com.notepad.base.BaseActivity;
+
+public class NoteActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
