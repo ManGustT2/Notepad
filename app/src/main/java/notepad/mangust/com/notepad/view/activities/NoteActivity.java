@@ -3,6 +3,8 @@ package notepad.mangust.com.notepad.view.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +13,11 @@ import android.view.MenuItem;
 
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseActivity;
+import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
 
 public class NoteActivity extends BaseActivity {
+    FragmentManager fm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,23 @@ public class NoteActivity extends BaseActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        fm = getSupportFragmentManager();
+
+        Fragment fragment = fm.findFragmentById(R.id.container);
+
+        if (fragment == null)
+            addFragment(new NoteListFragment());
+
     }
+
+    public void addFragment(Fragment fragment){
+        fm.beginTransaction()
+                .add(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
