@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ public class NoteListFragment extends BaseFragment {
     private Note note;
     private static NoteListFragment nFragment;
     private LinearLayoutManager llm;
+    private FragmentManager fm;
 
 
 
@@ -72,8 +75,9 @@ public class NoteListFragment extends BaseFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+ //               activity.addFragment(new NoteDetailFragment());
+
             }
         });
     }
