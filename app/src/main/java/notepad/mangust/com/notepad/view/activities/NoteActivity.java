@@ -41,6 +41,12 @@ public class NoteActivity extends BaseActivity {
                 .commit();
     }
 
+    public void repleiceFragment(Fragment fragment){
+        fm.beginTransaction()
+                .add(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
