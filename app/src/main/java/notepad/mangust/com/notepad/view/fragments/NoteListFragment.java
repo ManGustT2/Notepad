@@ -42,14 +42,11 @@ public class NoteListFragment extends BaseFragment{
     private LinearLayoutManager llm;
     private FragmentManager fm;
 
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (NoteActivity)context;
     }
-
 
     @Nullable
     @Override
@@ -79,13 +76,10 @@ public class NoteListFragment extends BaseFragment{
         fablist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 activity.repleiceFragment(new NoteEnterFragment());
-
             }
         });
     }
-
 
     private void prepareDate(){
         for (int i = 0; i<10; i ++ ){
@@ -102,6 +96,4 @@ public class NoteListFragment extends BaseFragment{
             activity.repleiceFragment(new NoteDetailFragment());
         }
     };
-
-
 }

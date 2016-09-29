@@ -24,7 +24,6 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
         onItemClick = itemListener;
     }
 
-
     public NoteRvAdapter(List<Note> list, Context c) {
         super(list);
         context = c;
@@ -40,7 +39,7 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
     public void onBindViewHolder(BaseRvAdapter.ViewHolder holder, final int position) {
         holder.tvDate.setText(getList().get(position).getDate());
         holder.tvTitle.setText(getList().get(position).getmTitle());
-        holder.tvTitle.setOnClickListener(new View.OnClickListener(){
+        holder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 onItemClick.onItemClick(position);

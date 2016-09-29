@@ -47,14 +47,4 @@ public class NoteDetailFragment extends BaseFragment {
         fabDetaile = (FloatingActionButton)view.findViewById(R.id.fabNDF);
 
     }
-
-    private void initListeners(){
-        fabDetaile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
 }
