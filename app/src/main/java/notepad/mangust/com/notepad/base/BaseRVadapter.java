@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,13 +39,11 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseRvAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
         public TextView tvDate;
-        public LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.title);
             tvDate = (TextView) itemView.findViewById(R.id.date);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.llItemContainer);
         }
     }
 }

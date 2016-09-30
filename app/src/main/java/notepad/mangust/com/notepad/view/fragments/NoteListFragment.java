@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,17 +22,16 @@ import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.base.BaseRvAdapter;
 import notepad.mangust.com.notepad.model.Note;
-import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
 import notepad.mangust.com.notepad.view.adapters.NoteRvAdapter;
 
 /**
  * Created by Администратор on 26.09.2016.
  */
-public class NoteListFragment extends BaseFragment{
+public class NoteListFragment extends BaseFragment {
     private NoteActivity activity;
     private RecyclerView recyclerView;
-    private FloatingActionButton fablist;
+    private FloatingActionButton fab;
     private List<Note> list = new ArrayList();
     private NoteRvAdapter adapter;
 
@@ -41,6 +39,8 @@ public class NoteListFragment extends BaseFragment{
     private static NoteListFragment nFragment;
     private LinearLayoutManager llm;
     private FragmentManager fm;
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -63,20 +63,21 @@ public class NoteListFragment extends BaseFragment{
 
     private void findUI(View view){
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
-        fablist = (FloatingActionButton) view.findViewById(R.id.fabNLF);
+        fab = (FloatingActionButton) view.findViewById(R.id.fablist);
 
         llm = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(llm);
         adapter = new NoteRvAdapter(list, getActivity());
         recyclerView.setAdapter(adapter);
-        adapter.setItemListener(onItemClick);
     }
 
     private void initListeners(){
-        fablist.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.repleiceFragment(new NoteEnterFragment());
+
+ //               activity.addFragment(new NoteDetailFragment());
+
             }
         });
     }
@@ -90,10 +91,4 @@ public class NoteListFragment extends BaseFragment{
         }
         adapter.update(list);
     }
-    private OnItemClick onItemClick = new OnItemClick() {
-        @Override
-        public void onItemClick(int position) {
-            activity.repleiceFragment(new NoteDetailFragment());
-        }
-    };
 }

@@ -2,15 +2,12 @@ package notepad.mangust.com.notepad.view.adapters;
 
 import android.content.ClipData;
 import android.content.Context;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import notepad.mangust.com.notepad.base.BaseRvAdapter;
 import notepad.mangust.com.notepad.model.Note;
-import notepad.mangust.com.notepad.model.OnItemClick;
-import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
 
 /**
  * Created by Администратор on 27.09.2016.
@@ -18,11 +15,6 @@ import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
 public class NoteRvAdapter extends BaseRvAdapter<Note> {
     private List<Note> mItemList = new ArrayList<>();
     private Context context;
-    private OnItemClick onItemClick;
-
-    public void setItemListener(OnItemClick itemListener){
-        onItemClick = itemListener;
-    }
 
     public NoteRvAdapter(List<Note> list, Context c) {
         super(list);
@@ -36,15 +28,9 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
     }
 
     @Override
-    public void onBindViewHolder(BaseRvAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(BaseRvAdapter.ViewHolder holder, int position) {
         holder.tvDate.setText(getList().get(position).getDate());
         holder.tvTitle.setText(getList().get(position).getmTitle());
-        holder.linearLayout.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                onItemClick.onItemClick(position);
-            }
-        });
     }
 }
 
