@@ -42,6 +42,8 @@ public class NoteListFragment extends BaseFragment{
     private LinearLayoutManager llm;
     private FragmentManager fm;
 
+    public static String DETAIL_KEY = "detailkey";
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -86,6 +88,7 @@ public class NoteListFragment extends BaseFragment{
             Note note = new Note();
             note.setmDate(new Date(System.currentTimeMillis()));
             note.setmTitle("title " + i);
+            note.setDescriptionTV("deskription " + i);
             list.add(note);
         }
         adapter.update(list);
@@ -93,7 +96,12 @@ public class NoteListFragment extends BaseFragment{
     private OnItemClick onItemClick = new OnItemClick() {
         @Override
         public void onItemClick(int position) {
-            activity.repleiceFragment(new NoteDetailFragment());
+            Bundle bundle = new Bundle();
+            Note note = list.get(position);
+            bundle.putSerializable(DETAIL_KEY, note);
+            NoteDetailFragment fragment = new NoteDetailFragment();
+            fragment.setArguments(bundle);
+            activity.repleiceFragment(fragment);
         }
     };
 }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
+import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
 
 /**
@@ -19,12 +20,16 @@ public class NoteEnterFragment extends BaseFragment {
     private NoteActivity activity;
     private EditText titleET;
     private EditText enterET;
+    private Note note;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         activity =(NoteActivity)context;
+        if (getArguments() != null)
+        note = (Note)getArguments().getSerializable(NoteDetailFragment.ENTER_KEY);
+
     }
 
     @Nullable
@@ -38,8 +43,12 @@ public class NoteEnterFragment extends BaseFragment {
     }
 
     private void findUI(View view){
-        titleET = (EditText)view.findViewById(R.id.title_FDN);
-        enterET = (EditText)view.findViewById(R.id.enterTextNEF);
+        enterET = (EditText) view.findViewById(R.id.enterTextNEF);
+        titleET = (EditText) view.findViewById(R.id.titleNEF);
+        if (note != null) {
+            titleET.setText(note.getmTitle());
+            enterET.setText(note.getDescriptionTV());
+        }
     }
 
 }

@@ -1,14 +1,27 @@
 package notepad.mangust.com.notepad.model;
 
+import android.widget.TextView;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by Администратор on 26.09.2016.
  */
-public class Note {
+public class Note implements Serializable {
     private String mTitle;
     private Date mDate;
+
+    public String  getDescriptionTV() {
+        return descriptionTV;
+    }
+
+    public void setDescriptionTV(String descriptionTV) {
+        this.descriptionTV = descriptionTV;
+    }
+
+    private String descriptionTV;
 
     public String getmTitle() {
         return mTitle;

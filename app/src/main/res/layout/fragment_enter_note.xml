@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:background="#F21">
+    android:background="@color/colorWhite">
 
     <EditText
         android:id="@+id/titleNEF"
@@ -14,7 +14,8 @@
     <EditText
         android:id="@+id/enterTextNEF"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_data"/>
+        android:layout_height="match_parent"
+        android:hint="@string/enter_data"
+        android:gravity="top"/>
 
 </LinearLayout>

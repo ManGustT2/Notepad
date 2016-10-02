@@ -2,6 +2,7 @@ package notepad.mangust.com.notepad.view.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
+import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
 
@@ -22,12 +24,14 @@ public class NoteDetailFragment extends BaseFragment {
     private TextView titleTV;
     private TextView descriptionTV;
     private FloatingActionButton fabDetaile;
+    public static String ENTER_KEY = "enterkey";
+    private Note note;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (NoteActivity)context;
-
+        note = (Note)getArguments().getSerializable(NoteListFragment.DETAIL_KEY);
     }
 
     @Nullable
@@ -43,8 +47,22 @@ public class NoteDetailFragment extends BaseFragment {
 
     private void findUI(View view){
         titleTV = (TextView)view.findViewById(R.id.title_FDN);
+        titleTV.setText(note.getmTitle());
         descriptionTV = (TextView)view.findViewById(R.id.description_FDN);
+        descriptionTV.setText(note.getDescriptionTV());
+
         fabDetaile = (FloatingActionButton)view.findViewById(R.id.fabNDF);
+
+        fabDetaile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NoteEnterFragment noteEnterFragment = new NoteEnterFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ENTER_KEY, note);
+                noteEnterFragment.setArguments(bundle);
+                activity.repleiceFragment(noteEnterFragment);
+            }
+        });
 
     }
 }
