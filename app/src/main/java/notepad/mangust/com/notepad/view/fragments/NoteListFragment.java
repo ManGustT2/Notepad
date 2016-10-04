@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.base.BaseRvAdapter;
@@ -43,11 +45,17 @@ public class NoteListFragment extends BaseFragment{
     private FragmentManager fm;
 
     public static String DETAIL_KEY = "detailkey";
+    private Realm realm;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (NoteActivity)context;
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration
+                .Builder(context).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        realm = Realm.getInstance(realmConfiguration);
     }
 
     @Nullable
@@ -84,13 +92,17 @@ public class NoteListFragment extends BaseFragment{
     }
 
     private void prepareDate(){
+
         for (int i = 0; i<10; i ++ ){
-            Note note = new Note();
+            realm.beginTransaction();
+            Note note = realm.createObject(Note.class);
             note.setmDate(new Date(System.currentTimeMillis()));
             note.setmTitle("title " + i);
-            note.setDescriptionTV("deskription " + i);
+            note.setDescriptionTV("description " + i);
             list.add(note);
+            realm.commitTransaction();
         }
+
         adapter.update(list);
     }
     private OnItemClick onItemClick = new OnItemClick() {

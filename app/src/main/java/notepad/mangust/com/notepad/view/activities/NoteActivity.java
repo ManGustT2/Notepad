@@ -5,12 +5,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseActivity;
 import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
@@ -36,15 +40,15 @@ public class NoteActivity extends BaseActivity {
 
     public void addFragment(Fragment fragment){
         fm.beginTransaction()
-                .add(R.id.container, fragment)
                 .addToBackStack(null)
+                .add(R.id.container, fragment)
                 .commit();
     }
 
     public void repleiceFragment(Fragment fragment){
         fm.beginTransaction()
-                .add(R.id.container, fragment)
                 .addToBackStack(null)
+                .add(R.id.container, fragment)
                 .commit();
     }
 
@@ -68,5 +72,16 @@ public class NoteActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        int count = getFragmentManager().getBackStackEntryCount();
+            if (count == 0) {
+                super.onBackPressed();
+            } else {
+                getSupportFragmentManager().popBackStack();
+            }
     }
 }

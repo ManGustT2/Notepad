@@ -37,7 +37,7 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
 
     @Override
     public void onBindViewHolder(BaseRvAdapter.ViewHolder holder, final int position) {
-        holder.tvDate.setText(getList().get(position).getDate());
+        holder.tvDate.setText(getList().get(position).getmDate().toString());
         holder.tvTitle.setText(getList().get(position).getmTitle());
         holder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override

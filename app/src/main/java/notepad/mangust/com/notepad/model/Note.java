@@ -6,10 +6,12 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Администратор on 26.09.2016.
  */
-public class Note implements Serializable {
+public class Note extends RealmObject implements Serializable {
     private String mTitle;
     private Date mDate;
 
@@ -39,12 +41,12 @@ public class Note implements Serializable {
         this.mDate = mDate;
     }
 
-    private String convertData(){
-        SimpleDateFormat formater = new SimpleDateFormat("EEEE.MMM.yyyy,hh:mm:ss");
-        return formater.format(mDate);
-    }
-
-    public String getDate(){
-        return convertData();
-    }
+//    private String convertData(){
+//        SimpleDateFormat formater = new SimpleDateFormat("EEEE.MMM.yyyy,hh:mm:ss");
+//        return formater.format(mDate);
+//    }
+//
+//    public String getDate(){
+//        return convertData();
+//    }
 }
