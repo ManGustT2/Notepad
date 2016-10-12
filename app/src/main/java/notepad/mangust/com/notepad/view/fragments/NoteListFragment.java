@@ -64,9 +64,13 @@ public class NoteListFragment extends BaseFragment{
 
         View v = inflater.inflate(R.layout.fragment_list_note, container, false);
 
+        list = realm.where(Note.class).findAll();
+
         findUI(v);
         initListeners();
-        prepareDate();
+        if(list != null)
+            adapter.update(list);
+//        prepareDate();
 
         return v;
     }
@@ -80,15 +84,28 @@ public class NoteListFragment extends BaseFragment{
         adapter = new NoteRvAdapter(list, getActivity());
         recyclerView.setAdapter(adapter);
         adapter.setItemListener(onItemClick);
+        adapter.setOnLongClickListener(onLongItemClick);
     }
 
     private void initListeners(){
         fablist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.repleiceFragment(new NoteEnterFragment());
+                activity.repleiceFragment(new NoteEnterFragment(), true);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        activity.setTitle("Notepad");
+        activity.showDoneIcon(false);
+        if(adapter != null){
+            list = realm.where(Note.class).findAll();
+            adapter.update(list);
+        }
+
+        super.onResume();
     }
 
     private void prepareDate(){
@@ -105,6 +122,7 @@ public class NoteListFragment extends BaseFragment{
 
         adapter.update(list);
     }
+
     private OnItemClick onItemClick = new OnItemClick() {
         @Override
         public void onItemClick(int position) {
@@ -113,7 +131,15 @@ public class NoteListFragment extends BaseFragment{
             bundle.putSerializable(DETAIL_KEY, note);
             NoteDetailFragment fragment = new NoteDetailFragment();
             fragment.setArguments(bundle);
-            activity.repleiceFragment(fragment);
+            activity.repleiceFragment(fragment, true);
+        }
+    };
+
+    private OnLongItemClick onLongItemClick = new OnLongItemClick() {
+        @Override
+        public void onItemLongClicked(int position) {
+            list.remove(position);
+//            adapter.update(list);
         }
     };
 }

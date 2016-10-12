@@ -32,6 +32,9 @@ public class NoteDetailFragment extends BaseFragment {
         super.onAttach(context);
         activity = (NoteActivity)context;
         note = (Note)getArguments().getSerializable(NoteListFragment.DETAIL_KEY);
+        activity.setTitle(note.getmTitle());
+        activity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Nullable
@@ -60,9 +63,15 @@ public class NoteDetailFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ENTER_KEY, note);
                 noteEnterFragment.setArguments(bundle);
-                activity.repleiceFragment(noteEnterFragment);
+                activity.repleiceFragment(noteEnterFragment, true);
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        activity.showDoneIcon(false);
+        super.onResume();
     }
 }

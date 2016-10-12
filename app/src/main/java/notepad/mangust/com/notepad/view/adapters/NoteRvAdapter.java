@@ -11,6 +11,7 @@ import notepad.mangust.com.notepad.base.BaseRvAdapter;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
+import notepad.mangust.com.notepad.view.fragments.OnLongItemClick;
 
 /**
  * Created by Администратор on 27.09.2016.
@@ -19,9 +20,14 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
     private List<Note> mItemList = new ArrayList<>();
     private Context context;
     private OnItemClick onItemClick;
+    private OnLongItemClick onLongItemClick;
 
     public void setItemListener(OnItemClick itemListener){
         onItemClick = itemListener;
+    }
+
+    public void setOnLongClickListener(OnLongItemClick longItemClick){
+        onLongItemClick = longItemClick;
     }
 
     public NoteRvAdapter(List<Note> list, Context c) {
@@ -30,9 +36,8 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
     }
 
     public void update(List<Note> items){
-        mItemList = items;
+        setList(items);
         notifyDataSetChanged();
-
     }
 
     @Override
@@ -43,6 +48,13 @@ public class NoteRvAdapter extends BaseRvAdapter<Note> {
             @Override
             public void onClick(View v) {
                 onItemClick.onItemClick(position);
+            }
+        });
+        holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onLongItemClick.onItemLongClicked(position);
+                return true;
             }
         });
     }

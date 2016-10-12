@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import notepad.mangust.com.notepad.R;
+import notepad.mangust.com.notepad.model.Note;
 
 /**
  * Created by Администратор on 27.09.2016.
@@ -26,6 +27,10 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseRvAdapte
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.title_note, parent, false);
         return new ViewHolder(v);
+    }
+
+    public void setList(List<T> list){
+        this.list = list;
     }
 
     @Override
