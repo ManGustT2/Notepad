@@ -65,16 +65,34 @@ public class NoteEnterFragment extends BaseFragment {
         mIvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(enterET.getText().toString().trim().length() > 0
-                        && titleET.getText().toString().trim().length() > 0){
-                    realm.beginTransaction();
-                    Note note = realm.createObject(Note.class);
-                    note.setmTitle(titleET.getText().toString());
-                    note.setDescriptionTV(enterET.getText().toString());
-                    note.setmDate(new Date(System.currentTimeMillis()));
-                    realm.commitTransaction();
-                    hideKeyboard(getActivity(), mIvSave);
-                    activity.onBackPressed();
+                if (enterET.getText().toString().trim().length() > 0
+                        && titleET.getText().toString().trim().length() > 0) {
+                    if (note == null) {
+                        realm.beginTransaction();
+                        int key;
+                        try {
+                            key = realm.where(Note.class).findAll().size()+1;
+                        } catch(ArrayIndexOutOfBoundsException ex) {
+                            key = 0;
+                        }
+                        note = realm.createObject(Note.class);
+                        note.setmTitle(titleET.getText().toString());
+                        note.setId(key);
+                        note.setDescriptionTV(enterET.getText().toString());
+                        note.setmDate(new Date(System.currentTimeMillis()));
+                        realm.commitTransaction();
+                        hideKeyboard(getActivity(), mIvSave);
+                        activity.onBackPressed();
+                    } else {
+                        realm.beginTransaction();
+                        note.setmTitle(titleET.getText().toString());
+                        note.setDescriptionTV(enterET.getText().toString());
+                        note.setmDate(new Date(System.currentTimeMillis()));
+                        note = realm.copyToRealmOrUpdate(note);
+                        realm.commitTransaction();
+                        hideKeyboard(getActivity(), mIvSave);
+                        activity.onBackPressed();
+                    }
                 }
             }
         });
