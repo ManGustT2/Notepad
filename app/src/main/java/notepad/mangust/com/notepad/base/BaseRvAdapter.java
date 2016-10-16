@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import notepad.mangust.com.notepad.R;
-import notepad.mangust.com.notepad.model.Note;
 
 /**
  * Created by Администратор on 27.09.2016.

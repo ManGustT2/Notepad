@@ -2,7 +2,6 @@ package notepad.mangust.com.notepad.view.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.model.Note;
-import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
 
 /**

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +22,12 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.base.BaseRvAdapter;
+import notepad.mangust.com.notepad.database.NoteDB;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
@@ -38,6 +42,7 @@ public class NoteListFragment extends BaseFragment{
     private FloatingActionButton fablist;
     private List<Note> list = new ArrayList();
     private NoteRvAdapter adapter;
+    private int eventId;
 
     private Note note;
     private static NoteListFragment nFragment;
@@ -138,8 +143,15 @@ public class NoteListFragment extends BaseFragment{
     private OnLongItemClick onLongItemClick = new OnLongItemClick() {
         @Override
         public void onItemLongClicked(int position) {
-            list.remove(position);
-//            adapter.update(list);
+            realm = Realm.getDefaultInstance();
+         //   list.remove(position);
+            adapter.notifyDataSetChanged();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.where(Note.class).equalTo("id", note.getId()).findFirst().removeFromRealm();
+                }
+        });
         }
     };
 }

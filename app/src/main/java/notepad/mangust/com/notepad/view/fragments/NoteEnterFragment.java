@@ -68,30 +68,9 @@ public class NoteEnterFragment extends BaseFragment {
                 if (enterET.getText().toString().trim().length() > 0
                         && titleET.getText().toString().trim().length() > 0) {
                     if (note == null) {
-                        realm.beginTransaction();
-                        int key;
-                        try {
-                            key = realm.where(Note.class).findAll().size()+1;
-                        } catch(ArrayIndexOutOfBoundsException ex) {
-                            key = 0;
-                        }
-                        note = realm.createObject(Note.class);
-                        note.setmTitle(titleET.getText().toString());
-                        note.setId(key);
-                        note.setDescriptionTV(enterET.getText().toString());
-                        note.setmDate(new Date(System.currentTimeMillis()));
-                        realm.commitTransaction();
-                        hideKeyboard(getActivity(), mIvSave);
-                        activity.onBackPressed();
+                        greateObject();
                     } else {
-                        realm.beginTransaction();
-                        note.setmTitle(titleET.getText().toString());
-                        note.setDescriptionTV(enterET.getText().toString());
-                        note.setmDate(new Date(System.currentTimeMillis()));
-                        note = realm.copyToRealmOrUpdate(note);
-                        realm.commitTransaction();
-                        hideKeyboard(getActivity(), mIvSave);
-                        activity.onBackPressed();
+                        editObject();
                     }
                 }
             }
@@ -101,6 +80,36 @@ public class NoteEnterFragment extends BaseFragment {
     public static void hideKeyboard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void greateObject(){
+        realm.beginTransaction();
+        int key;
+        try {
+            key = realm.where(Note.class).findAll().size()+1;
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            key = 0;
+        }
+
+        note = realm.createObject(Note.class);
+        note.setmTitle(titleET.getText().toString());
+        note.setId(key);
+        note.setDescriptionTV(enterET.getText().toString());
+        note.setmDate(new Date(System.currentTimeMillis()));
+        realm.commitTransaction();
+        hideKeyboard(getActivity(), mIvSave);
+        activity.onBackPressed();
+    }
+
+    private void editObject(){
+        realm.beginTransaction();
+        note.setmTitle(titleET.getText().toString());
+        note.setDescriptionTV(enterET.getText().toString());
+        note.setmDate(new Date(System.currentTimeMillis()));
+        note = realm.copyToRealmOrUpdate(note);
+        realm.commitTransaction();
+        hideKeyboard(getActivity(), mIvSave);
+        activity.onBackPressed();
     }
 
 }

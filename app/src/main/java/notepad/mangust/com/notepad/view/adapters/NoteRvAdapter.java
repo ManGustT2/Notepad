@@ -1,6 +1,5 @@
 package notepad.mangust.com.notepad.view.adapters;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.view.View;
 
@@ -10,7 +9,6 @@ import java.util.List;
 import notepad.mangust.com.notepad.base.BaseRvAdapter;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
-import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
 import notepad.mangust.com.notepad.view.fragments.OnLongItemClick;
 
 /**

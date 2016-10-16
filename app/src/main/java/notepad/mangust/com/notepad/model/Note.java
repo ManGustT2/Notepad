@@ -1,9 +1,7 @@
 package notepad.mangust.com.notepad.model;
 
-import android.widget.TextView;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -23,6 +21,7 @@ public class Note extends RealmObject implements Serializable {
     public void setId(int mId) {
         this.id = mId;
     }
+
     @PrimaryKey
     private int id = 0;
 
@@ -51,13 +50,4 @@ public class Note extends RealmObject implements Serializable {
     public void setmDate(Date mDate) {
         this.mDate = mDate;
     }
-
-//    private String convertData(){
-//        SimpleDateFormat formater = new SimpleDateFormat("EEEE.MMM.yyyy,hh:mm:ss");
-//        return formater.format(mDate);
-//    }
-//
-//    public String getDate(){
-//        return convertData();
-//    }
 }
