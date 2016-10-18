@@ -14,18 +14,17 @@
         android:layout_alignParentStart="true">
         <TextView
             android:id="@+id/title_FDN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dasasda"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"/>
+            style="@style/AppTheme.TextView"
+            android:textStyle="normal"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/for_title"/>
         <TextView
             android:id="@+id/description_FDN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dcsdacsd"
-            android:layout_marginTop="30dp"
-            android:paddingLeft="10dp" />
+            style="@style/AppTheme.TextView"
+            android:textStyle="italic"
+            android:textSize="16sp"
+            android:textColor="@color/for_date"/>
     </LinearLayout>
 
 

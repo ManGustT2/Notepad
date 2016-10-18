@@ -143,15 +143,12 @@ public class NoteListFragment extends BaseFragment{
     private OnLongItemClick onLongItemClick = new OnLongItemClick() {
         @Override
         public void onItemLongClicked(int position) {
-            realm = Realm.getDefaultInstance();
-         //   list.remove(position);
-            adapter.notifyDataSetChanged();
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.where(Note.class).equalTo("id", note.getId()).findFirst().removeFromRealm();
-                }
-        });
+            realm.beginTransaction();
+            Note results = realm.where(Note.class).equalTo("id", list.get(position).getId()).findFirst();
+            results.removeFromRealm();
+            realm.commitTransaction();
+            adapter.update(list);
+
         }
     };
 }

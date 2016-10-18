@@ -11,13 +11,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/title_name"
-            android:textSize="18dp"
-            android:layout_marginBottom="6dp"/>
+            android:textSize="18sp"
+            android:layout_marginBottom="6dp"
+            android:typeface="serif"
+            android:textStyle="italic"
+            android:textColor="@color/for_title"/>
 
         <TextView
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/date_string"
-            android:textSize="14dp"/>
+            android:textSize="14sp"
+            android:textColor="@color/for_date"/>
 </LinearLayout>
