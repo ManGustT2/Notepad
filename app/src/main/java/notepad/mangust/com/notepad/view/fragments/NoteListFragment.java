@@ -1,20 +1,18 @@
 package notepad.mangust.com.notepad.view.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,27 +20,28 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmObject;
-import io.realm.RealmResults;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
-import notepad.mangust.com.notepad.base.BaseRvAdapter;
-import notepad.mangust.com.notepad.database.NoteDB;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
 import notepad.mangust.com.notepad.view.adapters.NoteRvAdapter;
+import notepad.mangust.com.notepad.view.dialog.RemoveDialogFragment;
 
 /**
  * Created by Администратор on 26.09.2016.
  */
 public class NoteListFragment extends BaseFragment{
+    private static final int REQUEST_REMOVE = 1;
+    private static final int REQUEST_ANOTHER_ONE = 2;
+
     private NoteActivity activity;
     private RecyclerView recyclerView;
     private FloatingActionButton fablist;
     private List<Note> list = new ArrayList();
     private NoteRvAdapter adapter;
     private int eventId;
+    private int positions;
 
     private Note note;
     private static NoteListFragment nFragment;
@@ -143,12 +142,27 @@ public class NoteListFragment extends BaseFragment{
     private OnLongItemClick onLongItemClick = new OnLongItemClick() {
         @Override
         public void onItemLongClicked(int position) {
+            positions = position;
+            openRemovePicker();
+            }
+
+    };
+
+     private void openRemovePicker() {
+        DialogFragment fragment = new RemoveDialogFragment();
+        fragment.setTargetFragment(this, REQUEST_REMOVE);
+        fragment.show(getFragmentManager(), fragment.getClass().getName());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){;
             realm.beginTransaction();
-            Note results = realm.where(Note.class).equalTo("id", list.get(position).getId()).findFirst();
+            Note results = realm.where(Note.class).equalTo("id", list.get(positions).getId()).findFirst();
             results.removeFromRealm();
             realm.commitTransaction();
             adapter.update(list);
-
         }
-    };
+    }
 }
