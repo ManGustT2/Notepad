@@ -14,10 +14,10 @@ import notepad.mangust.com.notepad.R;
 /**
  * Created by Администратор on 27.09.2016.
  */
-public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseRvAdapter.ViewHolder> {
+public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
     private List<T> list;
 
-    public BaseRvAdapter(List<T> list){
+    public BaseRecyclerViewAdapter(List<T> list){
         this.list = list;
     }
 
@@ -45,7 +45,6 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseRvAdapte
         public TextView tvTitle;
         public TextView tvDate;
         public LinearLayout linearLayout;
-
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.title);

@@ -18,48 +18,57 @@ import notepad.mangust.com.notepad.view.activities.NoteActivity;
  * Created by Администратор on 26.09.2016.
  */
 public class NoteDetailFragment extends BaseFragment {
+    private static final String TAG = "NoteDetailFragment";
     private NoteActivity activity;
-    private TextView titleTV;
-    private TextView descriptionTV;
-    private FloatingActionButton fabDetaile;
+    private TextView mTitleTextView;
+    private TextView mDescriptionTextView;
+    private FloatingActionButton mFloatingActionButton;
+    private Note mNote;
     public static String ENTER_KEY = "enterkey";
-    private Note note;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (NoteActivity)context;
-        note = (Note)getArguments().getParcelable(NoteListFragment.DETAIL_KEY);
-        activity.setTitle(note.getmTitle());
-        activity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity = (NoteActivity)context;;
+    }
+
+    public static NoteDetailFragment newInstance(Note note){
+        NoteDetailFragment fragment = new NoteDetailFragment();
+        Bundle b = new Bundle();
+        b.putParcelable(TAG, note);
+        fragment.setArguments(b);
+        return fragment;
+    }
+
+    private void getArgs(){
+        mNote = getArguments().getParcelable(TAG);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_detail_note, container, false);
-
+        getArgs();
+        activity.setTitle(mNote.getmTitle());
+        activity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         findUI(v);
-
         return v;
     }
 
     private void findUI(View view){
-        titleTV = (TextView)view.findViewById(R.id.title_FDN);
-        titleTV.setText(note.getmTitle());
-        descriptionTV = (TextView)view.findViewById(R.id.description_FDN);
-        descriptionTV.setText(note.getDescriptionTV());
-
-        fabDetaile = (FloatingActionButton)view.findViewById(R.id.fabNDF);
-
-        fabDetaile.setOnClickListener(new View.OnClickListener() {
+        mTitleTextView = (TextView)view.findViewById(R.id.title_FDN);
+        mTitleTextView.setText(mNote.getmTitle());
+        mDescriptionTextView = (TextView)view.findViewById(R.id.description_FDN);
+        mDescriptionTextView.setText(mNote.getDescriptionTV());
+        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fabNDF);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NoteEnterFragment noteEnterFragment = new NoteEnterFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(ENTER_KEY, note);
+                bundle.putParcelable(ENTER_KEY, mNote);
                 noteEnterFragment.setArguments(bundle);
                 activity.repleiceFragment(noteEnterFragment, true);
             }

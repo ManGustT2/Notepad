@@ -8,13 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.content.DialogInterface.OnClickListener;
 
 import notepad.mangust.com.notepad.R;
-import notepad.mangust.com.notepad.model.Note;
-import notepad.mangust.com.notepad.view.adapters.NoteRvAdapter;
 
 /**
  * Created by Администратор on 20.10.2016.
@@ -45,8 +41,6 @@ public class RemoveDialogFragment extends DialogFragment implements OnClickListe
                 onDismiss(dialog);
                 break;
         }
-
-
     }
 
     public void onDismiss(DialogInterface dialog) {

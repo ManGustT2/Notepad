@@ -15,23 +15,22 @@ import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
 
 public class NoteActivity extends BaseActivity {
     private static final String TAG = "TAG";
-    private FragmentManager fm;
-    private Toolbar toolbar;
-    private TextView tvTitle;
-    private ImageView ivDone;
+    private FragmentManager mFragmentManager;
+    private Toolbar mToolbar;
+    private TextView mTextView;
+    private ImageView mImegeViewDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvTitle = (TextView) toolbar.findViewById(R.id.tvTitle);
-        ivDone = (ImageView) toolbar.findViewById(R.id.ivSave);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mTextView = (TextView) mToolbar.findViewById(R.id.tvTitle);
+        mImegeViewDone = (ImageView) mToolbar.findViewById(R.id.ivSave);
+        setSupportActionBar(mToolbar);
+        mFragmentManager = getSupportFragmentManager();
 
-        fm = getSupportFragmentManager();
-
-        Fragment fragment = fm.findFragmentById(R.id.container);
+        Fragment fragment = mFragmentManager.findFragmentById(R.id.container);
 
         if (fragment == null)
             repleiceFragment(new NoteListFragment(), false);
@@ -39,44 +38,41 @@ public class NoteActivity extends BaseActivity {
     }
 
     public void addFragment(Fragment fragment){
-        fm.beginTransaction()
+        mFragmentManager.beginTransaction()
                 .add(R.id.container, fragment)
                 .commit();
     }
 
     public void repleiceFragment(Fragment fragment, boolean addBackStack){
-        FragmentTransaction transaction = fm.beginTransaction();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.container, fragment, TAG);
         if(addBackStack) transaction.addToBackStack(null);
         transaction.commit();
     }
 
     public Toolbar getToolbar(){
-        return toolbar;
+        return mToolbar;
     }
 
     public void setTitle(String title){
-        tvTitle.setText(title);
+        mTextView.setText(title);
     }
 
     public void showDoneIcon(boolean isVisible){
         if(isVisible){
-            ivDone.setVisibility(View.VISIBLE);
+            mImegeViewDone.setVisibility(View.VISIBLE);
         } else {
-            ivDone.setVisibility(View.GONE);
+            mImegeViewDone.setVisibility(View.GONE);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-
         if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

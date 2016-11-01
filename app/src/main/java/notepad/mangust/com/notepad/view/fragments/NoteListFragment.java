@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
-import notepad.mangust.com.notepad.view.adapters.NoteRvAdapter;
+import notepad.mangust.com.notepad.view.adapters.NoteRecycleViewAdapter;
 import notepad.mangust.com.notepad.view.dialog.RemoveDialogFragment;
 
 /**
@@ -35,27 +34,19 @@ public class NoteListFragment extends BaseFragment{
     private static final int REQUEST_REMOVE = 1;
     private static final int REQUEST_ANOTHER_ONE = 2;
 
-    private NoteActivity activity;
-    private RecyclerView recyclerView;
-    private FloatingActionButton fablist;
+    private NoteActivity mNoteActivity;
+    private RecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButton;
     private List<Note> list = new ArrayList();
-    private NoteRvAdapter adapter;
-    private int eventId;
-    private int positions;
-
-    private Note note;
-    private static NoteListFragment nFragment;
-    private LinearLayoutManager llm;
-    private FragmentManager fm;
-
-    public static String DETAIL_KEY = "detailkey";
+    private NoteRecycleViewAdapter mNoteRecycleViewAdapter;
+    private int mPositions;
+    private LinearLayoutManager mLinearLayoutManager;
     private Realm realm;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (NoteActivity)context;
-
+        mNoteActivity = (NoteActivity)context;
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder(context).build();
         Realm.setDefaultConfiguration(realmConfiguration);
@@ -65,84 +56,59 @@ public class NoteListFragment extends BaseFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_list_note, container, false);
-
         list = realm.where(Note.class).findAll();
-
         findUI(v);
         initListeners();
         if(list != null)
-            adapter.update(list);
-//        prepareDate();
-
+            mNoteRecycleViewAdapter.update(list);
         return v;
     }
 
     private void findUI(View view){
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
-        fablist = (FloatingActionButton) view.findViewById(R.id.fabNLF);
-
-        llm = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(llm);
-        adapter = new NoteRvAdapter(list, getActivity());
-        recyclerView.setAdapter(adapter);
-        adapter.setItemListener(onItemClick);
-        adapter.setOnLongClickListener(onLongItemClick);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabNLF);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mNoteRecycleViewAdapter = new NoteRecycleViewAdapter(list, getActivity());
+        mRecyclerView.setAdapter(mNoteRecycleViewAdapter);
+        mNoteRecycleViewAdapter.setItemListener(onItemClick);
+        mNoteRecycleViewAdapter.setOnLongClickListener(onLongItemClick);
     }
 
     private void initListeners(){
-        fablist.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.repleiceFragment(new NoteEnterFragment(), true);
+                mNoteActivity.repleiceFragment(new NoteEnterFragment(), true);
             }
         });
     }
 
     @Override
     public void onResume() {
-        activity.setTitle("Notepad");
-        activity.showDoneIcon(false);
-        if(adapter != null){
+        mNoteActivity.setTitle("Notepad");
+        mNoteActivity.showDoneIcon(false);
+        if(mNoteRecycleViewAdapter != null){
             list = realm.where(Note.class).findAll();
-            adapter.update(list);
+            mNoteRecycleViewAdapter.update(list);
         }
 
         super.onResume();
     }
 
-    private void prepareDate(){
-
-        for (int i = 0; i<10; i ++ ){
-            realm.beginTransaction();
-            Note note = realm.createObject(Note.class);
-            note.setmDate(new Date(System.currentTimeMillis()));
-            note.setmTitle("title " + i);
-            note.setDescriptionTV("description " + i);
-            list.add(note);
-            realm.commitTransaction();
-        }
-
-        adapter.update(list);
-    }
-
     private OnItemClick onItemClick = new OnItemClick() {
         @Override
         public void onItemClick(int position) {
-            Bundle bundle = new Bundle();
             Note note = list.get(position);
-            bundle.putParcelable(DETAIL_KEY, note);
-            NoteDetailFragment fragment = new NoteDetailFragment();
-            fragment.setArguments(bundle);
-            activity.repleiceFragment(fragment, true);
+            mNoteActivity.repleiceFragment(NoteDetailFragment.newInstance(note), true);
         }
     };
 
     private OnLongItemClick onLongItemClick = new OnLongItemClick() {
         @Override
         public void onItemLongClicked(int position) {
-            positions = position;
+            mPositions = position;
             openRemovePicker();
             }
 
@@ -159,10 +125,10 @@ public class NoteListFragment extends BaseFragment{
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK){;
             realm.beginTransaction();
-            Note results = realm.where(Note.class).equalTo("id", list.get(positions).getId()).findFirst();
+            Note results = realm.where(Note.class).equalTo("id", list.get(mPositions).getId()).findFirst();
             results.deleteFromRealm();
             realm.commitTransaction();
-            adapter.update(list);
+            mNoteRecycleViewAdapter.update(list);
         }
     }
 }
