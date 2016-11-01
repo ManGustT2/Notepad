@@ -35,7 +35,7 @@ public class NoteEnterFragment extends BaseFragment {
         super.onAttach(context);
         activity =(NoteActivity)context;
         if (getArguments() != null)
-        note = (Note)getArguments().getSerializable(NoteDetailFragment.ENTER_KEY);
+        note = (Note)getArguments().getParcelable(NoteDetailFragment.ENTER_KEY);
     }
 
     @Nullable

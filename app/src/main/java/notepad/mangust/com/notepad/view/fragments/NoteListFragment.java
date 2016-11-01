@@ -132,7 +132,7 @@ public class NoteListFragment extends BaseFragment{
         public void onItemClick(int position) {
             Bundle bundle = new Bundle();
             Note note = list.get(position);
-            bundle.putSerializable(DETAIL_KEY, note);
+            bundle.putParcelable(DETAIL_KEY, note);
             NoteDetailFragment fragment = new NoteDetailFragment();
             fragment.setArguments(bundle);
             activity.repleiceFragment(fragment, true);
@@ -160,7 +160,7 @@ public class NoteListFragment extends BaseFragment{
         if (resultCode == Activity.RESULT_OK){;
             realm.beginTransaction();
             Note results = realm.where(Note.class).equalTo("id", list.get(positions).getId()).findFirst();
-            results.removeFromRealm();
+            results.deleteFromRealm();
             realm.commitTransaction();
             adapter.update(list);
         }

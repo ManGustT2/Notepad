@@ -29,7 +29,7 @@ public class NoteDetailFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (NoteActivity)context;
-        note = (Note)getArguments().getSerializable(NoteListFragment.DETAIL_KEY);
+        note = (Note)getArguments().getParcelable(NoteListFragment.DETAIL_KEY);
         activity.setTitle(note.getmTitle());
         activity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,7 +59,7 @@ public class NoteDetailFragment extends BaseFragment {
             public void onClick(View v) {
                 NoteEnterFragment noteEnterFragment = new NoteEnterFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ENTER_KEY, note);
+                bundle.putParcelable(ENTER_KEY, note);
                 noteEnterFragment.setArguments(bundle);
                 activity.repleiceFragment(noteEnterFragment, true);
             }
