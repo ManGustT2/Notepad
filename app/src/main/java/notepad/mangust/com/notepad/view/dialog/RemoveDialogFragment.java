@@ -24,7 +24,7 @@ public class RemoveDialogFragment extends DialogFragment implements OnClickListe
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity())
-                .setTitle("Хотите удалить?").setPositiveButton(R.string.yes, this)
+                .setTitle("Delete data").setPositiveButton(R.string.yes, this)
                 .setNegativeButton(R.string.no, this)
                 .setMessage(R.string.message_text);
         return adb.create();

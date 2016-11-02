@@ -1,7 +1,7 @@
 <resources>
     <string name="yes">OK</string>
     <string name="no">Cancel</string>
-    <string name="message_text">Do you want to remove?</string>
+    <string name="message_text">You have selected data will be deleted, are you sure?</string>
     <string name="app_name">NotePad</string>
     <string name="save_icon">Save</string>
     <string name="title_name">title</string>

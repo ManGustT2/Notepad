@@ -113,7 +113,7 @@ public class NoteEnterFragment extends BaseFragment {
 
         mNote = mRealm.createObject(Note.class);
         mNote.setmTitle(mEditTextTitle.getText().toString());
-        mNote.setId(key);
+//        mNote.setId(key);
         mNote.setDescriptionTV(mEditTextEnter.getText().toString());
         mNote.setmDate(new Date(System.currentTimeMillis()));
         mRealm.commitTransaction();
@@ -128,7 +128,7 @@ public class NoteEnterFragment extends BaseFragment {
         mNote.setmDate(new Date(System.currentTimeMillis()));
         mNote = mRealm.copyToRealmOrUpdate(mNote);
         mRealm.commitTransaction();
-        hideKeyboard(getActivity(),getView());
+        hideKeyboard(getActivity(), getView());
         mNoteActivity.onBackPressed();
     }
 }
