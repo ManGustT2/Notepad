@@ -22,7 +22,6 @@ public class NoteDetailFragment extends BaseFragment {
     private NoteActivity activity;
     private TextView mTitleTextView;
     private TextView mDescriptionTextView;
-    private FloatingActionButton mFloatingActionButton;
     private Note mNote;
     public static String ENTER_KEY = "enterkey";
 
@@ -62,7 +61,7 @@ public class NoteDetailFragment extends BaseFragment {
         mTitleTextView.setText(mNote.getmTitle());
         mDescriptionTextView = (TextView)view.findViewById(R.id.description_FDN);
         mDescriptionTextView.setText(mNote.getDescriptionTV());
-        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fabNDF);
+        FloatingActionButton mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fabNDF);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +77,7 @@ public class NoteDetailFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        activity.showDoneIcon(false);
+        //activity.showDoneIcon(false);
         super.onResume();
     }
 }

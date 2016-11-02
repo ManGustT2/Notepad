@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,13 +58,16 @@ public class NoteActivity extends BaseActivity {
         mTextView.setText(title);
     }
 
-    public void showDoneIcon(boolean isVisible){
-        if(isVisible){
-            mImegeViewDone.setVisibility(View.VISIBLE);
-        } else {
-            mImegeViewDone.setVisibility(View.GONE);
-        }
-    }
+//    public void showDoneIcon(boolean isVisible){
+//        if(isVisible){
+//            mImegeViewDone.setVisibility(View.VISIBLE);
+//        } else {
+//            mImegeViewDone.setVisibility(View.GONE);
+//        }
+//    }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

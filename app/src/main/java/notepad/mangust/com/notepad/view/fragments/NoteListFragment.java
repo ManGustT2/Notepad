@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -88,7 +87,7 @@ public class NoteListFragment extends BaseFragment{
     @Override
     public void onResume() {
         mNoteActivity.setTitle("Notepad");
-        mNoteActivity.showDoneIcon(false);
+       // mNoteActivity.showDoneIcon(false);
         if(mNoteRecycleViewAdapter != null){
             list = realm.where(Note.class).findAll();
             mNoteRecycleViewAdapter.update(list);

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -22,15 +25,16 @@ public class NoteEnterFragment extends BaseFragment {
     private EditText mEditTextTitle;
     private EditText mEditTextEnter;
     private Note mNote;
-    private ImageView mIvSave;
+//    private ImageView mIvSave;
     private Realm mRealm;
+    Menu menu;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mNoteActivity =(NoteActivity)context;
+        mNoteActivity = (NoteActivity) context;
         if (getArguments() != null)
-        mNote = (Note)getArguments().getParcelable(NoteDetailFragment.ENTER_KEY);
+            mNote = (Note) getArguments().getParcelable(NoteDetailFragment.ENTER_KEY);
     }
 
     @Nullable
@@ -39,23 +43,20 @@ public class NoteEnterFragment extends BaseFragment {
         View v = inflater.inflate(R.layout.fragment_enter_note, container, false);
         mRealm = Realm.getDefaultInstance();
         findUI(v);
+        setHasOptionsMenu(true);
         return v;
     }
 
-    private void findUI(View view){
-        mIvSave = (ImageView) mNoteActivity.getToolbar().findViewById(R.id.ivSave);
-        mNoteActivity.showDoneIcon(true);
-        mNoteActivity.setTitle("New mNote");
-        mEditTextEnter = (EditText) view.findViewById(R.id.enterTextNEF);
-        mEditTextTitle = (EditText) view.findViewById(R.id.titleNEF);
-        if (mNote != null) {
-            mEditTextTitle.setText(mNote.getmTitle());
-            mEditTextEnter.setText(mNote.getDescriptionTV());
-        }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_note, menu);
+    }
 
-        mIvSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
                 if (mEditTextEnter.getText().toString().trim().length() > 0
                         && mEditTextTitle.getText().toString().trim().length() > 0) {
                     if (mNote == null) {
@@ -64,8 +65,36 @@ public class NoteEnterFragment extends BaseFragment {
                         editObject();
                     }
                 }
-            }
-        });
+                    return true;
+                    default:
+                        return super.onOptionsItemSelected(item);
+                }
+        }
+
+    private void findUI(View view){
+      //  mIvSave = (ImageView) mNoteActivity.getToolbar().findViewById(R.id.ivSave);
+        //mNoteActivity.showDoneIcon(true);
+        mNoteActivity.setTitle("New mNote");
+        mEditTextEnter = (EditText) view.findViewById(R.id.enterTextNEF);
+        mEditTextTitle = (EditText) view.findViewById(R.id.titleNEF);
+        if (mNote != null) {
+            mEditTextTitle.setText(mNote.getmTitle());
+            mEditTextEnter.setText(mNote.getDescriptionTV());
+        }
+
+//        mIvSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mEditTextEnter.getText().toString().trim().length() > 0
+//                        && mEditTextTitle.getText().toString().trim().length() > 0) {
+//                    if (mNote == null) {
+//                        greateObject();
+//                    } else {
+//                        editObject();
+//                    }
+//                }
+//            }
+//        });
     }
 
     public static void hideKeyboard(Context context, View view) {
@@ -88,7 +117,7 @@ public class NoteEnterFragment extends BaseFragment {
         mNote.setDescriptionTV(mEditTextEnter.getText().toString());
         mNote.setmDate(new Date(System.currentTimeMillis()));
         mRealm.commitTransaction();
-        hideKeyboard(getActivity(), mIvSave);
+        hideKeyboard(getActivity(),getView());
         mNoteActivity.onBackPressed();
     }
 
@@ -99,7 +128,7 @@ public class NoteEnterFragment extends BaseFragment {
         mNote.setmDate(new Date(System.currentTimeMillis()));
         mNote = mRealm.copyToRealmOrUpdate(mNote);
         mRealm.commitTransaction();
-        hideKeyboard(getActivity(), mIvSave);
+        hideKeyboard(getActivity(),getView());
         mNoteActivity.onBackPressed();
     }
 }
