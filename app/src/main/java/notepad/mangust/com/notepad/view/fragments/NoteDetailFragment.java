@@ -77,7 +77,6 @@ public class NoteDetailFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        //activity.showDoneIcon(false);
         super.onResume();
     }
 }

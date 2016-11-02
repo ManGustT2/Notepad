@@ -31,7 +31,6 @@ import notepad.mangust.com.notepad.view.dialog.RemoveDialogFragment;
  */
 public class NoteListFragment extends BaseFragment{
     private static final int REQUEST_REMOVE = 1;
-    private static final int REQUEST_ANOTHER_ONE = 2;
 
     private NoteActivity mNoteActivity;
     private RecyclerView mRecyclerView;
@@ -122,7 +121,7 @@ public class NoteListFragment extends BaseFragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){;
+        if (resultCode == Activity.RESULT_OK){
             realm.beginTransaction();
             Note results = realm.where(Note.class).equalTo("id", list.get(mPositions).getId()).findFirst();
             results.deleteFromRealm();

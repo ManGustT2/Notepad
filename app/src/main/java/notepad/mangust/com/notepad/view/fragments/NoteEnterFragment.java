@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import java.util.Date;
 import io.realm.Realm;
 import notepad.mangust.com.notepad.R;
@@ -25,9 +24,7 @@ public class NoteEnterFragment extends BaseFragment {
     private EditText mEditTextTitle;
     private EditText mEditTextEnter;
     private Note mNote;
-//    private ImageView mIvSave;
     private Realm mRealm;
-    Menu menu;
 
     @Override
     public void onAttach(Context context) {
@@ -72,8 +69,6 @@ public class NoteEnterFragment extends BaseFragment {
         }
 
     private void findUI(View view){
-      //  mIvSave = (ImageView) mNoteActivity.getToolbar().findViewById(R.id.ivSave);
-        //mNoteActivity.showDoneIcon(true);
         mNoteActivity.setTitle("New mNote");
         mEditTextEnter = (EditText) view.findViewById(R.id.enterTextNEF);
         mEditTextTitle = (EditText) view.findViewById(R.id.titleNEF);
@@ -81,20 +76,6 @@ public class NoteEnterFragment extends BaseFragment {
             mEditTextTitle.setText(mNote.getmTitle());
             mEditTextEnter.setText(mNote.getDescriptionTV());
         }
-
-//        mIvSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mEditTextEnter.getText().toString().trim().length() > 0
-//                        && mEditTextTitle.getText().toString().trim().length() > 0) {
-//                    if (mNote == null) {
-//                        greateObject();
-//                    } else {
-//                        editObject();
-//                    }
-//                }
-//            }
-//        });
     }
 
     public static void hideKeyboard(Context context, View view) {
@@ -113,7 +94,7 @@ public class NoteEnterFragment extends BaseFragment {
 
         mNote = mRealm.createObject(Note.class);
         mNote.setmTitle(mEditTextTitle.getText().toString());
-//        mNote.setId(key);
+        mNote.setId(key);
         mNote.setDescriptionTV(mEditTextEnter.getText().toString());
         mNote.setmDate(new Date(System.currentTimeMillis()));
         mRealm.commitTransaction();
