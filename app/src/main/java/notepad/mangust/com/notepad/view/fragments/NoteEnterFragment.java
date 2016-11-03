@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import java.util.Date;
 import io.realm.Realm;
+import io.realm.RealmResults;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.model.Note;
@@ -87,7 +88,8 @@ public class NoteEnterFragment extends BaseFragment {
         mRealm.beginTransaction();
         int key;
         try {
-            key = mRealm.where(Note.class).findAll().size()+1;
+            RealmResults<Note> list = mRealm.where(Note.class).findAll();
+            key = list.get(list.size()-1).getId()+1;
         } catch(ArrayIndexOutOfBoundsException ex) {
             key = 0;
         }
