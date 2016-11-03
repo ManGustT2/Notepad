@@ -93,7 +93,9 @@ public class NoteEnterFragment extends BaseFragment {
         }
 
         mNote = mRealm.createObject(Note.class);
-        mRealm.copyToRealm(mNote);
+        mNote = getDataNote(mNote);
+        mNote.setId(key);
+        mRealm.copyToRealmOrUpdate(mNote);
         mRealm.commitTransaction();
         hideKeyboard(getActivity(), getView());
         mNoteActivity.onBackPressed();
