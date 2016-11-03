@@ -79,4 +79,10 @@ public class NoteDetailFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
     }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+    }
 }

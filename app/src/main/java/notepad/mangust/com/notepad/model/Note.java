@@ -14,7 +14,6 @@ import io.realm.annotations.PrimaryKey;
  * Created by Администратор on 26.09.2016.
  */
 public class Note extends RealmObject implements Parcelable{
-
     @PrimaryKey
     private int id;
     private String mTitle;

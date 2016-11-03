@@ -69,7 +69,7 @@ public class NoteEnterFragment extends BaseFragment {
         }
 
     private void findUI(View view){
-        mNoteActivity.setTitle("New mNote");
+        mNoteActivity.setTitle("New Note");
         mEditTextEnter = (EditText) view.findViewById(R.id.enterTextNEF);
         mEditTextTitle = (EditText) view.findViewById(R.id.titleNEF);
         if (mNote != null) {
@@ -93,23 +93,24 @@ public class NoteEnterFragment extends BaseFragment {
         }
 
         mNote = mRealm.createObject(Note.class);
-        mNote.setmTitle(mEditTextTitle.getText().toString());
-        mNote.setId(key);
-        mNote.setDescriptionTV(mEditTextEnter.getText().toString());
-        mNote.setmDate(new Date(System.currentTimeMillis()));
+        mRealm.copyToRealm(mNote);
         mRealm.commitTransaction();
-        hideKeyboard(getActivity(),getView());
+        hideKeyboard(getActivity(), getView());
         mNoteActivity.onBackPressed();
     }
 
     private void editObject(){
         mRealm.beginTransaction();
-        mNote.setmTitle(mEditTextTitle.getText().toString());
-        mNote.setDescriptionTV(mEditTextEnter.getText().toString());
-        mNote.setmDate(new Date(System.currentTimeMillis()));
-        mNote = mRealm.copyToRealmOrUpdate(mNote);
+        mRealm.copyToRealmOrUpdate(getDataNote(mNote));
         mRealm.commitTransaction();
         hideKeyboard(getActivity(), getView());
         mNoteActivity.onBackPressed();
+    }
+
+    private Note getDataNote(Note note){
+        note.setmTitle(mEditTextTitle.getText().toString());
+        note.setDescriptionTV(mEditTextEnter.getText().toString());
+        note.setmDate(new Date(System.currentTimeMillis()));
+        return note;
     }
 }

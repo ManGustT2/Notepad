@@ -86,6 +86,8 @@ public class NoteListFragment extends BaseFragment{
     @Override
     public void onResume() {
         mNoteActivity.setTitle("Notepad");
+        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
        // mNoteActivity.showDoneIcon(false);
         if(mNoteRecycleViewAdapter != null){
             list = realm.where(Note.class).findAll();
