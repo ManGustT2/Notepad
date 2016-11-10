@@ -3,8 +3,8 @@ package notepad.mangust.com.notepad.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -17,8 +17,19 @@ public class Note extends RealmObject implements Parcelable{
     @PrimaryKey
     private int id;
     private String mTitle;
+    //private ImageView mImageView;
     private Date mDate;
     private String descriptionTV;
+
+//    public ImageView getImageView() {
+//        return mImageView;
+//    }
+//
+//    public void setImageView(ImageView imageView) {
+//        mImageView = imageView;
+//    }
+
+
 
     public Note(){
 

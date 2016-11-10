@@ -12,13 +12,17 @@
         android:hint="@string/enter_title"
         android:allowUndo="false"
         android:textStyle="italic"/>
-
     <EditText
         android:id="@+id/enterTextNEF"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/enter_data"
         android:gravity="top"
         android:textStyle="italic"/>
+    <ImageView
+        android:id="@+id/imageViewNEF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_add_white_24dp"/>
 
 </LinearLayout>

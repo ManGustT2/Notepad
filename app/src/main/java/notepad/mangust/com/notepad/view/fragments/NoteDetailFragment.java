@@ -25,7 +25,6 @@ public class NoteDetailFragment extends BaseFragment {
     private Note mNote;
     public static String ENTER_KEY = "enterkey";
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -72,7 +71,6 @@ public class NoteDetailFragment extends BaseFragment {
                 activity.repleiceFragment(noteEnterFragment, true);
             }
         });
-
     }
 
     @Override
@@ -82,7 +80,6 @@ public class NoteDetailFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-
         super.onDestroy();
     }
 }
