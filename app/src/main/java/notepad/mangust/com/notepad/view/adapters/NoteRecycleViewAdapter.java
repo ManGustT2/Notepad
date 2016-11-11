@@ -35,19 +35,19 @@ public class NoteRecycleViewAdapter extends BaseRecyclerViewAdapter<Note> {
     }
 
     @Override
-    public void onBindViewHolder(BaseRecyclerViewAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BaseRecyclerViewAdapter.ViewHolder holder, final int position) {
         holder.tvDate.setText(getList().get(position).getmDate().toString());
         holder.tvTitle.setText(getList().get(position).getmTitle());
         holder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mOnItemClick.onItemClick(position);
+                mOnItemClick.onItemClick(holder.getAdapterPosition());
             }
         });
         holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                mOnLongItemClick.onItemLongClicked(position);
+                mOnLongItemClick.onItemLongClicked(holder.getAdapterPosition());
                 return true;
             }
         });

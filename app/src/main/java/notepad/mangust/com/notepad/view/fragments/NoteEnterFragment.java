@@ -2,7 +2,11 @@ package notepad.mangust.com.notepad.view.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -27,6 +33,9 @@ public class NoteEnterFragment extends BaseFragment {
     private EditText mEditTextEnter;
     private Note mNote;
     private Realm mRealm;
+    private ImageView mImageView;
+
+    static final int GALLERY_REQUEST = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -43,10 +52,37 @@ public class NoteEnterFragment extends BaseFragment {
         mRealm = Realm.getDefaultInstance();
         findUI(v);
         setHasOptionsMenu(true);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, );
+            }
+        }
         return v;
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        Bitmap bitmap = null;
+        switch (requestCode){
+            case GALLERY_REQUEST:
+                Uri selectedImage = imageReturnedIntent.getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap( , selectedImage);
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mImageView.setImageBitmap(bitmap);
+        }
+    }
+
+
+
+            @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_note, menu);
@@ -74,6 +110,7 @@ public class NoteEnterFragment extends BaseFragment {
         mNoteActivity.setTitle("New Note");
         mEditTextEnter = (EditText) view.findViewById(R.id.enterTextNEF);
         mEditTextTitle = (EditText) view.findViewById(R.id.titleNEF);
+        mImageView = (ImageView) view.findViewById(R.id.imageViewNEF);
         if (mNote != null) {
             mEditTextTitle.setText(mNote.getmTitle());
             mEditTextEnter.setText(mNote.getDescriptionTV());
