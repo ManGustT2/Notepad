@@ -1,16 +1,9 @@
 package notepad.mangust.com.notepad.view.fragments;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContentResolverCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,9 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Switch;
-
 import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -104,11 +94,14 @@ public class NoteEnterFragment extends BaseFragment {
             key = 0;
         }
 
-        mNote = mRealm.createObject(Note.class);
-        mRealm.copyToRealm(mNote);
+        Note note = new Note();
+        note = getDataNote(note);
+        note.setId(key);
+        mRealm.copyToRealmOrUpdate(note);
         mRealm.commitTransaction();
         hideKeyboard(getActivity(), getView());
         mNoteActivity.onBackPressed();
+        mRealm.close();
     }
 
     private void editObject(){
