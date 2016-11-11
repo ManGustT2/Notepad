@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.FileNotFoundException;
 import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -57,26 +58,32 @@ public class NoteEnterFragment extends BaseFragment {
             public void onClick(View v){
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, );
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
             }
-        }
+        });
+
         return v;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
-        Bitmap bitmap = null;
-        switch (requestCode){
-            case GALLERY_REQUEST:
-                Uri selectedImage = imageReturnedIntent.getData();
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap( , selectedImage);
-                }catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mImageView.setImageBitmap(bitmap);
+        if(resultCode == Activity.RESULT_OK) {
+            Bitmap bitmap = null;
+            switch (requestCode) {
+                case GALLERY_REQUEST:
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (java.io.IOException e) {
+                        e.printStackTrace();
+                    }
+                    mImageView.setImageBitmap(bitmap);
+            }
         }
     }
 
