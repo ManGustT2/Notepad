@@ -96,8 +96,13 @@ public class NoteEnterFragment extends BaseFragment {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_REQUEST:
+                    // TODO: 18.11.16 Try urcop lib
                     Uri selectedImage = imageReturnedIntent.getData();
-                    mImageView.setImageBitmap(decodeFile(getPath(selectedImage)));
+                    Bitmap scaledBitmap = decodeFile(getPath(selectedImage));
+//                    File savedScaledBitmap = saveBitmap(scaledBitmap);
+//                    Uri scaledBitmapUri = Uri.fromFile(savedScaledBitmap);
+//                    setNoteImage(scaledBitmapUri);
+//                    mImageView.setImageBitmap(scaledBitmapUri);
             }
         }
     }
@@ -122,6 +127,7 @@ public class NoteEnterFragment extends BaseFragment {
 //        destination.setImageBitmap(bitmap);
 //    }
 
+    // TODO: 18.11.16 move to util class
     private Bitmap decodeFile(String imgPath) {
         Bitmap b = null;
         int max_size = 10000;
