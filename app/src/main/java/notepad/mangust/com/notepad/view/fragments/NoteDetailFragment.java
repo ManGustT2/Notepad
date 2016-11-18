@@ -33,6 +33,7 @@ public class NoteDetailFragment extends BaseFragment {
         return fragment;
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

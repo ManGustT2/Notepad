@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-
 import notepad.mangust.com.notepad.R;
-import notepad.mangust.com.notepad.model.Note;
 
 /**
  * Created by Администратор on 20.10.2016.
@@ -19,16 +17,28 @@ import notepad.mangust.com.notepad.model.Note;
 public class RemoveDialogFragment extends DialogFragment implements OnClickListener {
 
     public static final String TAG_REMOVE_SELECTED = "weight";
+    int mPosition;
 
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            mPosition = savedInstanceState.getInt("curChoice", 0);
+
+        }
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity())
                 .setTitle("Delete data").setPositiveButton(R.string.yes, this)
                 .setNegativeButton(R.string.no, this)
                 .setMessage(R.string.message_text);
+        mPosition = getArguments().getInt("tag");
         return adb.create();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("curChoice", mPosition );
     }
 
 
