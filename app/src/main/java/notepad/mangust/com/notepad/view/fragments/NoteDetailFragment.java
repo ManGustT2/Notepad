@@ -19,19 +19,13 @@ import notepad.mangust.com.notepad.view.activities.NoteActivity;
  */
 public class NoteDetailFragment extends BaseFragment {
     private static final String TAG = "NoteDetailFragment";
+    public static String ENTER_KEY = "enterkey";
     private NoteActivity activity;
     private TextView mTitleTextView;
     private TextView mDescriptionTextView;
     private Note mNote;
-    public static String ENTER_KEY = "enterkey";
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = (NoteActivity)context;;
-    }
-
-    public static NoteDetailFragment newInstance(Note note){
+    public static NoteDetailFragment newInstance(Note note) {
         NoteDetailFragment fragment = new NoteDetailFragment();
         Bundle b = new Bundle();
         b.putParcelable(TAG, note);
@@ -39,7 +33,13 @@ public class NoteDetailFragment extends BaseFragment {
         return fragment;
     }
 
-    private void getArgs(){
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (NoteActivity) context;
+    }
+
+    private void getArgs() {
         mNote = getArguments().getParcelable(TAG);
     }
 
@@ -55,12 +55,12 @@ public class NoteDetailFragment extends BaseFragment {
         return v;
     }
 
-    private void findUI(View view){
-        mTitleTextView = (TextView)view.findViewById(R.id.title_FDN);
+    private void findUI(View view) {
+        mTitleTextView = (TextView) view.findViewById(R.id.title_FDN);
         mTitleTextView.setText(mNote.getmTitle());
-        mDescriptionTextView = (TextView)view.findViewById(R.id.description_FDN);
+        mDescriptionTextView = (TextView) view.findViewById(R.id.description_FDN);
         mDescriptionTextView.setText(mNote.getDescriptionTV());
-        FloatingActionButton mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.fabNDF);
+        FloatingActionButton mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabNDF);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

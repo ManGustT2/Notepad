@@ -2,7 +2,9 @@ package notepad.mangust.com.notepad.view.adapters;
 
 import android.content.Context;
 import android.view.View;
+
 import java.util.List;
+
 import notepad.mangust.com.notepad.base.BaseRecyclerViewAdapter;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.model.OnItemClick;
@@ -16,20 +18,20 @@ public class NoteRecycleViewAdapter extends BaseRecyclerViewAdapter<Note> {
     private OnItemClick mOnItemClick;
     private OnLongItemClick mOnLongItemClick;
 
-    public void setItemListener(OnItemClick itemListener){
-        mOnItemClick = itemListener;
-    }
-
-    public void setOnLongClickListener(OnLongItemClick longItemClick){
-        mOnLongItemClick = longItemClick;
-    }
-
     public NoteRecycleViewAdapter(List<Note> list, Context c) {
         super(list);
         mContext = c;
     }
 
-    public void update(List<Note> items){
+    public void setItemListener(OnItemClick itemListener) {
+        mOnItemClick = itemListener;
+    }
+
+    public void setOnLongClickListener(OnLongItemClick longItemClick) {
+        mOnLongItemClick = longItemClick;
+    }
+
+    public void update(List<Note> items) {
         setList(items);
         notifyDataSetChanged();
     }
@@ -38,7 +40,7 @@ public class NoteRecycleViewAdapter extends BaseRecyclerViewAdapter<Note> {
     public void onBindViewHolder(final BaseRecyclerViewAdapter.ViewHolder holder, final int position) {
         holder.tvDate.setText(getList().get(position).getmDate().toString());
         holder.tvTitle.setText(getList().get(position).getmTitle());
-        holder.linearLayout.setOnClickListener(new View.OnClickListener(){
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnItemClick.onItemClick(holder.getAdapterPosition());

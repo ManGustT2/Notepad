@@ -13,34 +13,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by Администратор on 26.09.2016.
  */
-public class Note extends RealmObject implements Parcelable{
-    @PrimaryKey
-    private int id;
-    private String mTitle;
-    //private ImageView mImageView;
-    private Date mDate;
-    private String descriptionTV;
-
-//    public ImageView getImageView() {
-//        return mImageView;
-//    }
-//
-//    public void setImageView(ImageView imageView) {
-//        mImageView = imageView;
-//    }
-
-
-
-    public Note(){
-
-    }
-
-    protected Note(Parcel in) {
-        id = in.readInt();
-        mTitle = in.readString();
-        descriptionTV = in.readString();
-    }
-
+public class Note extends RealmObject implements Parcelable {
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
         public Note createFromParcel(Parcel in) {
@@ -52,6 +25,23 @@ public class Note extends RealmObject implements Parcelable{
             return new Note[size];
         }
     };
+    @PrimaryKey
+    private int id;
+    private String mTitle;
+
+    private Date mDate;
+
+    private String descriptionTV;
+
+    public Note() {
+
+    }
+
+    protected Note(Parcel in) {
+        id = in.readInt();
+        mTitle = in.readString();
+        descriptionTV = in.readString();
+    }
 
     public int getId() {
         return id;

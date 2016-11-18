@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.content.DialogInterface.OnClickListener;
 
 import notepad.mangust.com.notepad.R;
+import notepad.mangust.com.notepad.model.Note;
 
 /**
  * Created by Администратор on 20.10.2016.
@@ -29,6 +30,7 @@ public class RemoveDialogFragment extends DialogFragment implements OnClickListe
                 .setMessage(R.string.message_text);
         return adb.create();
     }
+
 
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {

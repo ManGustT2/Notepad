@@ -17,7 +17,7 @@ import notepad.mangust.com.notepad.R;
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
     private List<T> list;
 
-    public BaseRecyclerViewAdapter(List<T> list){
+    public BaseRecyclerViewAdapter(List<T> list) {
         this.list = list;
     }
 
@@ -28,23 +28,24 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return new ViewHolder(v);
     }
 
-    public void setList(List<T> list){
-        this.list = list;
-    }
-
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    public List<T> getList(){
+    public List<T> getList() {
         return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
         public TextView tvDate;
         public LinearLayout linearLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.title);

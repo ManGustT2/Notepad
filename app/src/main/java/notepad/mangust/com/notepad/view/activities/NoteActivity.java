@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseActivity;
 import notepad.mangust.com.notepad.view.fragments.NoteListFragment;
@@ -30,28 +31,25 @@ public class NoteActivity extends BaseActivity {
 
     }
 
-    public void addFragment(Fragment fragment){
+    public void addFragment(Fragment fragment) {
         mFragmentManager.beginTransaction()
                 .add(R.id.container, fragment)
                 .commit();
     }
 
-    public void repleiceFragment(Fragment fragment, boolean addBackStack){
+    public void repleiceFragment(Fragment fragment, boolean addBackStack) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.container, fragment, TAG);
-        if(addBackStack) transaction.addToBackStack(null);
+        if (addBackStack) transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public Toolbar getToolbar(){
+    public Toolbar getToolbar() {
         return mToolbar;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
     }
-
-
-
 
 
     @Override
@@ -67,10 +65,10 @@ public class NoteActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         int count = getFragmentManager().getBackStackEntryCount();
-            if (count == 0) {
-                super.onBackPressed();
-            } else {
-                getSupportFragmentManager().popBackStack();
-            }
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 }

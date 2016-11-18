@@ -29,7 +29,7 @@ import notepad.mangust.com.notepad.view.dialog.RemoveDialogFragment;
 /**
  * Created by Администратор on 26.09.2016.
  */
-public class NoteListFragment extends BaseFragment{
+public class NoteListFragment extends BaseFragment {
     private static final int REQUEST_REMOVE = 1;
 
     private NoteActivity mNoteActivity;
@@ -40,11 +40,27 @@ public class NoteListFragment extends BaseFragment{
     private int mPositions;
     private LinearLayoutManager mLinearLayoutManager;
     private Realm realm;
+    private OnItemClick onItemClick = new OnItemClick() {
+        @Override
+        public void onItemClick(int position) {
+            Note note = list.get(position);
+            mNoteActivity.repleiceFragment(NoteDetailFragment.newInstance(note), true);
+        }
+    };
+    private OnLongItemClick onLongItemClick = new OnLongItemClick() {
+        @Override
+        public void onItemLongClicked(int position) {
+            mPositions = position;
+            openRemovePicker(position);
+
+        }
+
+    };
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mNoteActivity = (NoteActivity)context;
+        mNoteActivity = (NoteActivity) context;
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder(context).build();
         Realm.setDefaultConfiguration(realmConfiguration);
@@ -58,13 +74,15 @@ public class NoteListFragment extends BaseFragment{
         list = realm.where(Note.class).findAll();
         findUI(v);
         initListeners();
-        if(list != null)
+        if (list != null)
             mNoteRecycleViewAdapter.update(list);
         return v;
     }
 
-    private void findUI(View view){
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+
+
+    private void findUI(View view) {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabNLF);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -74,7 +92,7 @@ public class NoteListFragment extends BaseFragment{
         mNoteRecycleViewAdapter.setOnLongClickListener(onLongItemClick);
     }
 
-    private void initListeners(){
+    private void initListeners() {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,8 +106,7 @@ public class NoteListFragment extends BaseFragment{
         mNoteActivity.setTitle("Notepad");
         mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
         mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-       // mNoteActivity.showDoneIcon(false);
-        if(mNoteRecycleViewAdapter != null){
+        if (mNoteRecycleViewAdapter != null) {
             list = realm.where(Note.class).findAll();
             mNoteRecycleViewAdapter.update(list);
         }
@@ -97,33 +114,21 @@ public class NoteListFragment extends BaseFragment{
         super.onResume();
     }
 
-    private OnItemClick onItemClick = new OnItemClick() {
-        @Override
-        public void onItemClick(int position) {
-            Note note = list.get(position);
-            mNoteActivity.repleiceFragment(NoteDetailFragment.newInstance(note), true);
-        }
-    };
-
-    private OnLongItemClick onLongItemClick = new OnLongItemClick() {
-        @Override
-        public void onItemLongClicked(int position) {
-            mPositions = position;
-            openRemovePicker();
-            }
-
-    };
-
-     private void openRemovePicker() {
+    private void openRemovePicker(int positions) {
         DialogFragment fragment = new RemoveDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt("tag", positions);
+        fragment.setArguments(args);
         fragment.setTargetFragment(this, REQUEST_REMOVE);
         fragment.show(getFragmentManager(), fragment.getClass().getName());
+
     }
 
+    // TODO: 11.11.2016 передать позицию через интент  и через saveState вывести в LOG;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             realm.beginTransaction();
             Note results = realm.where(Note.class).equalTo("id", list.get(mPositions).getId()).findFirst();
             results.deleteFromRealm();
