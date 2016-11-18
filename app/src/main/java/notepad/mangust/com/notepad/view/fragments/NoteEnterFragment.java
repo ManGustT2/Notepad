@@ -1,4 +1,5 @@
 package notepad.mangust.com.notepad.view.fragments;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,12 +20,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import junit.framework.Assert;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Date;
+
 import io.realm.Realm;
-import io.realm.internal.IOException;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.model.Note;
@@ -32,6 +34,7 @@ import notepad.mangust.com.notepad.view.activities.NoteActivity;
 
 public class NoteEnterFragment extends BaseFragment {
     static final int GALLERY_REQUEST = 1;
+    private static String ENTER_KEY = "enterkey";
     private NoteActivity mNoteActivity;
     private EditText mEditTextTitle;
     private EditText mEditTextEnter;
@@ -44,12 +47,22 @@ public class NoteEnterFragment extends BaseFragment {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static NoteEnterFragment getInstance(Note note) {
+        Assert.assertNotNull("Note is null", note);
+        NoteEnterFragment noteEnterFragment = new NoteEnterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ENTER_KEY, note);
+        noteEnterFragment.setArguments(bundle);
+        return noteEnterFragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mNoteActivity = (NoteActivity) context;
-        if (getArguments() != null)
-            mNote = (Note) getArguments().getParcelable(NoteDetailFragment.ENTER_KEY);
+        if (getArguments() != null) {
+            mNote = getArguments().getParcelable(ENTER_KEY);
+        }
     }
 
     @Nullable
@@ -68,6 +81,7 @@ public class NoteEnterFragment extends BaseFragment {
 
         return v;
     }
+
     // TODO: 11.11.2016 permission;
     private void openGallery() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -108,8 +122,7 @@ public class NoteEnterFragment extends BaseFragment {
 //        destination.setImageBitmap(bitmap);
 //    }
 
-    private Bitmap decodeFile(String imgPath)
-    {
+    private Bitmap decodeFile(String imgPath) {
         Bitmap b = null;
         int max_size = 10000;
         File f = new File(imgPath);
@@ -120,8 +133,7 @@ public class NoteEnterFragment extends BaseFragment {
             BitmapFactory.decodeStream(fis, null, o);
             fis.close();
             int scale = 1;
-            if (o.outHeight > max_size || o.outWidth > max_size)
-            {
+            if (o.outHeight > max_size || o.outWidth > max_size) {
                 scale = (int) Math.pow(2, (int) Math.ceil(Math.log(max_size / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
             }
             BitmapFactory.Options o2 = new BitmapFactory.Options();
@@ -129,15 +141,14 @@ public class NoteEnterFragment extends BaseFragment {
             fis = new FileInputStream(f);
             b = BitmapFactory.decodeStream(fis, null, o2);
             fis.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return b;
     }
-     public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();

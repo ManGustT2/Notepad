@@ -1,32 +1,23 @@
 package notepad.mangust.com.notepad.base;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import notepad.mangust.com.notepad.R;
 
 /**
  * Created by Администратор on 27.09.2016.
  */
-public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.ViewHolder> {
+public abstract class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     private List<T> list;
 
-    public BaseRecyclerViewAdapter(List<T> list) {
-        this.list = list;
+    public BaseRecyclerViewAdapter() {
+        this.list = new ArrayList<>(0);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.title_note, parent, false);
-        return new ViewHolder(v);
-    }
+    public abstract VH onCreateViewHolder(ViewGroup parent, int viewType);
 
     @Override
     public int getItemCount() {
@@ -41,16 +32,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         this.list = list;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvTitle;
-        public TextView tvDate;
-        public LinearLayout linearLayout;
+    public abstract void update(List<T> items);
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.title);
-            tvDate = (TextView) itemView.findViewById(R.id.date);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.llItemContainer);
-        }
-    }
+    public abstract void apply(List<T> all);
+
+
+
 }

@@ -19,7 +19,6 @@ import notepad.mangust.com.notepad.view.activities.NoteActivity;
  */
 public class NoteDetailFragment extends BaseFragment {
     private static final String TAG = "NoteDetailFragment";
-    public static String ENTER_KEY = "enterkey";
     private NoteActivity activity;
     private TextView mTitleTextView;
     private TextView mDescriptionTextView;
@@ -65,10 +64,7 @@ public class NoteDetailFragment extends BaseFragment {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NoteEnterFragment noteEnterFragment = new NoteEnterFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(ENTER_KEY, mNote);
-                noteEnterFragment.setArguments(bundle);
+                NoteEnterFragment noteEnterFragment = NoteEnterFragment.getInstance(mNote);
                 activity.repleiceFragment(noteEnterFragment, true);
             }
         });
