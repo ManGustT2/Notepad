@@ -128,12 +128,15 @@ public class NoteListFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            realm.beginTransaction();
-            Note results = realm.where(Note.class).equalTo("id", list.get(mPositions).getId()).findFirst();
-            results.deleteFromRealm();
-            realm.commitTransaction();
-            mNoteRecycleViewAdapter.update(list);
+        if(data != null){
+            Bundle args = data.getBundleExtra(RemoveDialogFragment.TAG_REMOVE_SELECTED);
+            mPositions = args.getInt(RemoveDialogFragment.TAG_REMOVE);
         }
+        realm.beginTransaction();
+        Note results = realm.where(Note.class).equalTo("id", list.get(mPositions).getId()).findFirst();
+        results.deleteFromRealm();
+        realm.commitTransaction();
+        mNoteRecycleViewAdapter.update(list);
     }
 }
+

@@ -48,7 +48,6 @@ public class RemoveDialogFragment extends DialogFragment implements OnClickListe
             case Dialog.BUTTON_POSITIVE:
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(TAG_REMOVE, true);
-                bundle.putInt(TAG_REMOVE, mPosition);
                 Intent intent = new Intent();
                 intent.putExtra(TAG_REMOVE_SELECTED, bundle);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
