@@ -61,7 +61,6 @@ public class NoteListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNoteActivity.setTitle("Notepad");
-        getActivity().getS
 //        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
 //        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
