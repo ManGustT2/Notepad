@@ -38,12 +38,12 @@ public class NoteListFragment extends BaseFragment {
     private ItemClickListener<Note> mItemClickListener = new ItemClickListener<Note>() {
         @Override
         public void onItemLongClicked(Note item) {
-            mNoteActivity.repleiceFragment(NoteDetailFragment.newInstance(item), true);
+            openRemovePicker(item.getId());
         }
 
         @Override
         public void onItemClick(Note item) {
-            openRemovePicker(item.getId());
+            mNoteActivity.repleiceFragment(NoteDetailFragment.newInstance(item), true);
         }
     };
 
@@ -61,8 +61,9 @@ public class NoteListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNoteActivity.setTitle("Notepad");
-        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
-        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getActivity().getS
+//        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+//        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Nullable

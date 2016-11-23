@@ -98,7 +98,10 @@ public class NoteEnterFragment extends BaseFragment {
                 case GALLERY_REQUEST:
                     // TODO: 18.11.16 Try urcop lib
                     Uri selectedImage = imageReturnedIntent.getData();
-                    Bitmap scaledBitmap = decodeFile(getPath(selectedImage));
+                    mImageView.setImageBitmap(decodeFile(getPath(selectedImage)));
+//                    Uri selectedImage = imageReturnedIntent.getData();
+//                    Bitmap scaledBitmap = decodeFile(getPath(selectedImage));
+//                    mImageView.setImageBitmap(decodeFile(getPath(selectedImage)));
 //                    File savedScaledBitmap = saveBitmap(scaledBitmap);
 //                    Uri scaledBitmapUri = Uri.fromFile(savedScaledBitmap);
 //                    setNoteImage(scaledBitmapUri);
