@@ -25,6 +25,11 @@
             android:textStyle="italic"
             android:textSize="16sp"
             android:textColor="@color/for_date"/>
+        <ImageView
+            android:id="@+id/imageViewNDF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_add_white_24dp"/>
     </LinearLayout>
 
 

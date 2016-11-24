@@ -1,13 +1,17 @@
 package notepad.mangust.com.notepad.view.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
@@ -23,6 +27,7 @@ public class NoteDetailFragment extends BaseFragment {
     private TextView mTitleTextView;
     private TextView mDescriptionTextView;
     private Note mNote;
+    private ImageView mIvImage;
 
     public static NoteDetailFragment newInstance(Note note) {
         NoteDetailFragment fragment = new NoteDetailFragment();
@@ -56,6 +61,8 @@ public class NoteDetailFragment extends BaseFragment {
     }
 
     private void findUI(View view) {
+        mIvImage = (ImageView) view.findViewById(R.id.imageViewNDF);
+        mIvImage.setImageURI(Uri.parse(new File(mNote.getUri()).toString()));
         mTitleTextView = (TextView) view.findViewById(R.id.title_FDN);
         mTitleTextView.setText(mNote.getmTitle());
         mDescriptionTextView = (TextView) view.findViewById(R.id.description_FDN);

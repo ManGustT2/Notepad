@@ -3,10 +3,7 @@ package notepad.mangust.com.notepad.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ImageView;
-
 import java.util.Date;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -29,6 +26,16 @@ public class Note extends RealmObject implements Parcelable {
     private int id;
     private String mTitle;
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    private String uri;
+
     private Date mDate;
 
     private String descriptionTV;
@@ -41,6 +48,7 @@ public class Note extends RealmObject implements Parcelable {
         id = in.readInt();
         mTitle = in.readString();
         descriptionTV = in.readString();
+        uri = in.readString();
     }
 
     public int getId() {
@@ -85,5 +93,6 @@ public class Note extends RealmObject implements Parcelable {
         dest.writeInt(id);
         dest.writeString(mTitle);
         dest.writeString(descriptionTV);
+        dest.writeString(uri);
     }
 }

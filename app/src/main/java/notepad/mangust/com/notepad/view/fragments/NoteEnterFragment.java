@@ -31,6 +31,7 @@ import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.model.Note;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
+import notepad.mangust.com.notepad.view.utils.BitmapWorker;
 
 public class NoteEnterFragment extends BaseFragment {
     static final int GALLERY_REQUEST = 1;
@@ -41,6 +42,7 @@ public class NoteEnterFragment extends BaseFragment {
     private Note mNote;
     private Realm mRealm;
     private ImageView mImageView;
+    private Bitmap mBitmap;
 
     public static void hideKeyboard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -153,6 +155,8 @@ public class NoteEnterFragment extends BaseFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        mBitmap = b;
+
         return b;
     }
 
@@ -197,10 +201,12 @@ public class NoteEnterFragment extends BaseFragment {
         if (mNote != null) {
             mEditTextTitle.setText(mNote.getmTitle());
             mEditTextEnter.setText(mNote.getDescriptionTV());
+            mImageView.setImageURI(Uri.parse(new File(mNote.getUri()).toString()));
         }
     }
 
     private void greateObject() {
+        String path = Uri.fromFile(BitmapWorker.storeImage(getActivity(), mBitmap)).toString();
         mRealm.beginTransaction();
         int key;
         try {
@@ -211,6 +217,7 @@ public class NoteEnterFragment extends BaseFragment {
 
         Note note = new Note();
         note = getDataNote(note);
+        note.setUri(path);
         note.setId(key);
         mRealm.copyToRealmOrUpdate(note);
         mRealm.commitTransaction();

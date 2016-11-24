@@ -61,8 +61,8 @@ public class NoteListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNoteActivity.setTitle("Notepad");
-//        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
-//        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Nullable
@@ -95,7 +95,13 @@ public class NoteListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mNoteRecycleViewAdapter.update(realm.where(Note.class).findAll());
+        mNoteActivity.setTitle("Notepad");
+        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        if(mNoteRecycleViewAdapter != null) {
+            mNoteRecycleViewAdapter.update(realm.where(Note.class).findAll());
+        }
+
     }
 
     private void openRemovePicker(int noteId) {
