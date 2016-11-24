@@ -13,8 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import notepad.mangust.com.notepad.R;
 import notepad.mangust.com.notepad.base.BaseFragment;
 import notepad.mangust.com.notepad.model.Note;
@@ -50,10 +50,7 @@ public class NoteListFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mNoteActivity = (NoteActivity) context;
-        RealmConfiguration realmConfiguration = new RealmConfiguration
-                .Builder(context).build();
-        Realm.setDefaultConfiguration(realmConfiguration);
-        realm = Realm.getInstance(realmConfiguration);
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
