@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import notepad.mangust.com.notepad.R;
@@ -61,8 +60,8 @@ public class NoteListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNoteActivity.setTitle("Notepad");
-        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
-        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        mNoteActivity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+//        mNoteActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Nullable

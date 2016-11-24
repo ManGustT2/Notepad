@@ -100,65 +100,39 @@ public class NoteEnterFragment extends BaseFragment {
                 case GALLERY_REQUEST:
                     // TODO: 18.11.16 Try urcop lib
                     Uri selectedImage = imageReturnedIntent.getData();
-                    mImageView.setImageBitmap(decodeFile(getPath(selectedImage)));
-//                    Uri selectedImage = imageReturnedIntent.getData();
-//                    Bitmap scaledBitmap = decodeFile(getPath(selectedImage));
-//                    mImageView.setImageBitmap(decodeFile(getPath(selectedImage)));
-//                    File savedScaledBitmap = saveBitmap(scaledBitmap);
-//                    Uri scaledBitmapUri = Uri.fromFile(savedScaledBitmap);
-//                    setNoteImage(scaledBitmapUri);
-//                    mImageView.setImageBitmap(scaledBitmapUri);
+                    mBitmap = BitmapWorker.decodeFile(getPath(selectedImage));
+                    mImageView.setImageBitmap(mBitmap);
             }
         }
     }
-//
-//    private void setPic(String imagePath, ImageView destination){
-//        int targetW = destination.getWidth();
-//        int targetH = destination.getHeight();
-//
-//        BitmapFactory.Options bmOption = new BitmapFactory.Options();
-//        bmOption.inJustDecodeBounds = true;
-//        BitmapFactory.decodeFile(imagePath, bmOption);
-//        int photoW = bmOption.outWidth;
-//        int photoH = bmOption.outHeight;
-//
-//       int scaleFact = Math.min(photoW/targetW, photoH/targetH);
-//
-//        bmOption.inJustDecodeBounds = false;
-//        bmOption.inSampleSize = scaleFact;
-//        bmOption.inPurgeable = true;
-//
-//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOption);
-//        destination.setImageBitmap(bitmap);
-//    }
 
     // TODO: 18.11.16 move to util class
-    private Bitmap decodeFile(String imgPath) {
-        Bitmap b = null;
-        int max_size = 10000;
-        File f = new File(imgPath);
-        try {
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            FileInputStream fis = new FileInputStream(f);
-            BitmapFactory.decodeStream(fis, null, o);
-            fis.close();
-            int scale = 1;
-            if (o.outHeight > max_size || o.outWidth > max_size) {
-                scale = (int) Math.pow(2, (int) Math.ceil(Math.log(max_size / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
-            }
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            fis = new FileInputStream(f);
-            b = BitmapFactory.decodeStream(fis, null, o2);
-            fis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mBitmap = b;
-
-        return b;
-    }
+//    private Bitmap decodeFile(String imgPath) {
+//        Bitmap b = null;
+//        int max_size = 10000;
+//        File f = new File(imgPath);
+//        try {
+//            BitmapFactory.Options o = new BitmapFactory.Options();
+//            o.inJustDecodeBounds = true;
+//            FileInputStream fis = new FileInputStream(f);
+//            BitmapFactory.decodeStream(fis, null, o);
+//            fis.close();
+//            int scale = 1;
+//            if (o.outHeight > max_size || o.outWidth > max_size) {
+//                scale = (int) Math.pow(2, (int) Math.ceil(Math.log(max_size / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+//            }
+//            BitmapFactory.Options o2 = new BitmapFactory.Options();
+//            o2.inSampleSize = scale;
+//            fis = new FileInputStream(f);
+//            b = BitmapFactory.decodeStream(fis, null, o2);
+//            fis.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        mBitmap = b;
+//
+//        return b;
+//    }
 
     public String getPath(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
@@ -182,7 +156,7 @@ public class NoteEnterFragment extends BaseFragment {
                 if (mEditTextEnter.getText().toString().trim().length() > 0
                         && mEditTextTitle.getText().toString().trim().length() > 0) {
                     if (mNote == null) {
-                        greateObject();
+                        сreateObject();
                     } else {
                         editObject();
                     }
@@ -205,7 +179,7 @@ public class NoteEnterFragment extends BaseFragment {
         }
     }
 
-    private void greateObject() {
+    private void сreateObject() {
         String path = Uri.fromFile(BitmapWorker.storeImage(getActivity(), mBitmap)).toString();
         mRealm.beginTransaction();
         int key;
