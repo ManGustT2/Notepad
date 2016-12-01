@@ -28,6 +28,7 @@ import notepad.mangust.com.notepad.view.dialog.RemoveDialogFragment;
 public class NoteListFragment extends BaseFragment {
     private static final int REQUEST_REMOVE = 1;
 
+
     private NoteActivity mNoteActivity;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;

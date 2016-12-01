@@ -2,9 +2,11 @@ package notepad.mangust.com.notepad.view.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -37,15 +39,17 @@ import notepad.mangust.com.notepad.service.ImageSaverService;
 import notepad.mangust.com.notepad.view.activities.NoteActivity;
 
 public class NoteEnterFragment extends BaseFragment {
+
     static final int GALLERY_REQUEST = 1;
     private static String ENTER_KEY = "enterkey";
+    public final static String BROADCAST_ACTION = "broadkastkey";
     private NoteActivity mNoteActivity;
     private EditText mEditTextTitle;
     private EditText mEditTextEnter;
     private Note mNote;
     private ImageView mImageView;
-    private Bitmap mBitmap;
     private ImageSaverService mImageSaverService;
+
     private ServiceConnection mConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -85,6 +89,22 @@ public class NoteEnterFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
+        getActivity().registerReceiver(notifyclickedReceiver, intFilt);
+    }
+
+
+    private BroadcastReceiver notifyclickedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Uri uri = intent.getParcelableExtra("uri");
+            onImageSaved(uri);
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,6 +132,7 @@ public class NoteEnterFragment extends BaseFragment {
         getActivity().unbindService(mConn);
         hideKeyboard(getActivity(), getView());
     }
+
 
     // TODO: 11.11.2016 permission;
     private void openGallery() {
@@ -221,7 +242,7 @@ public class NoteEnterFragment extends BaseFragment {
     }
 
 
-    public void onImagegSaved(final Uri savedImageUri) {
+    public void onImageSaved(final Uri savedImageUri) {
         if (isAdded()) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override

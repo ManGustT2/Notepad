@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import java.io.File;
 
+import notepad.mangust.com.notepad.view.fragments.NoteEnterFragment;
 import notepad.mangust.com.notepad.view.utils.BitmapWorker;
 
 /**
@@ -18,7 +19,6 @@ import notepad.mangust.com.notepad.view.utils.BitmapWorker;
 public class ImageSaverService extends Service {
 
     private ImageSaverServiceBinder mImageSaverServiceBinder;
-    public static final String NEW_IMAGE = "newImage";
 
     @Override
     public void onCreate() {
@@ -47,10 +47,9 @@ public class ImageSaverService extends Service {
     }
 
     private synchronized void notifyListeners(final Uri imageUri) {
-        Intent intent = new Intent(NEW_IMAGE);
-        intent.putExtra("imageUri", imageUri);
+        Intent intent= new Intent(NoteEnterFragment.BROADCAST_ACTION);
+        intent.putExtra("uri", imageUri);
         sendBroadcast(intent);
-
     }
 
     public class ImageSaverServiceBinder extends Binder {
