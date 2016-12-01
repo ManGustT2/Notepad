@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="notepad.mangust.com.notepad"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="notepad.mangust.com.notepad">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -27,6 +27,15 @@
             android:name=".service.ImageSaverService"
             android:enabled="true"
             android:exported="false"/>
+
+        <receiver
+            android:name=".view.broadcast.ImageReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="ru.alexanderklimov.action.CAT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

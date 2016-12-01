@@ -1,10 +1,8 @@
 package notepad.mangust.com.notepad.view.utils;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,7 +40,6 @@ public class BitmapWorker  {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return b;
     }
 
@@ -60,7 +57,6 @@ public class BitmapWorker  {
         } catch (IOException e) {
             Log.d(TAG, "Error accessing file: " + e.getMessage());
         }
-
         return pictureFile;
     }
 

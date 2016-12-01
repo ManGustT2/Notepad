@@ -7,6 +7,10 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import java.io.File;
+
+import notepad.mangust.com.notepad.view.utils.BitmapWorker;
+
 /**
  * Tiply
  * Created by rostyslav on 24.11.16
@@ -14,6 +18,7 @@ import android.support.annotation.Nullable;
 public class ImageSaverService extends Service {
 
     private ImageSaverServiceBinder mImageSaverServiceBinder;
+    public static final String NEW_IMAGE = "newImage";
 
     @Override
     public void onCreate() {
@@ -29,24 +34,23 @@ public class ImageSaverService extends Service {
     }
 
     public void saveImage(final Uri imageUri) {
-        //do your logic
         new Thread(new Runnable() {
             @Override
             public void run() {
                 synchronized (Thread.currentThread()) {
-                    try {
-                        Thread.currentThread().wait(10_000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    notifyListeners(imageUri);
+                    File file = BitmapWorker.storeImage(getApplicationContext(),
+                            BitmapWorker.decodeFile(imageUri.toString()));
+                    notifyListeners(Uri.fromFile(file));
                 }
             }
         }).start();
     }
 
     private synchronized void notifyListeners(final Uri imageUri) {
-        //// TODO: 24.11.16 перепеши на broadcastы
+        Intent intent = new Intent(NEW_IMAGE);
+        intent.putExtra("imageUri", imageUri);
+        sendBroadcast(intent);
+
     }
 
     public class ImageSaverServiceBinder extends Binder {

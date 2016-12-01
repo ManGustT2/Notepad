@@ -135,34 +135,6 @@ public class NoteEnterFragment extends BaseFragment {
         }
     }
 
-    // TODO: 18.11.16 move to util class
-//    private Bitmap decodeFile(String imgPath) {
-//        Bitmap b = null;
-//        int max_size = 10000;
-//        File f = new File(imgPath);
-//        try {
-//            BitmapFactory.Options o = new BitmapFactory.Options();
-//            o.inJustDecodeBounds = true;
-//            FileInputStream fis = new FileInputStream(f);
-//            BitmapFactory.decodeStream(fis, null, o);
-//            fis.close();
-//            int scale = 1;
-//            if (o.outHeight > max_size || o.outWidth > max_size) {
-//                scale = (int) Math.pow(2, (int) Math.ceil(Math.log(max_size / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
-//            }
-//            BitmapFactory.Options o2 = new BitmapFactory.Options();
-//            o2.inSampleSize = scale;
-//            fis = new FileInputStream(f);
-//            b = BitmapFactory.decodeStream(fis, null, o2);
-//            fis.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        mBitmap = b;
-//
-//        return b;
-//    }
-
     public String getPath(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
@@ -225,22 +197,11 @@ public class NoteEnterFragment extends BaseFragment {
             } else {
                 Toast.makeText(getActivity(), "Internal error", Toast.LENGTH_LONG).show();
             }
-        } else {
+        } else {{
+            Toast.makeText(getActivity(), "Internal error", Toast.LENGTH_LONG).show();
+        }
             saveNote();
         }
-//        String path = Uri.fromFile(BitmapWorker.storeImage(getActivity(), mBitmap)).toString();
-//        mRealm.beginTransaction();
-//        int key;
-//        try {
-//            key = mRealm.where(Note.class).findAll().size() + 1;
-//        } catch (ArrayIndexOutOfBoundsException ex) {
-//            key = 0;
-//        }
-//
-//
-//        hideKeyboard(getActivity(), getView());
-//        mNoteActivity.onBackPressed();
-//        mRealm.close();
     }
 
     private void editObject() {
@@ -260,7 +221,7 @@ public class NoteEnterFragment extends BaseFragment {
     }
 
 
-    public void onImageSaved(final Uri savedImageUri) {
+    public void onImagegSaved(final Uri savedImageUri) {
         if (isAdded()) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
