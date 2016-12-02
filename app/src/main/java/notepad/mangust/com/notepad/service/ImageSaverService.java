@@ -47,7 +47,9 @@ public class ImageSaverService extends Service {
     }
 
     private synchronized void notifyListeners(final Uri imageUri) {
-        Intent intent= new Intent(NoteEnterFragment.BROADCAST_ACTION);
+        Intent intent = new Intent();
+        intent.setAction(NoteEnterFragment.BROADCAST_ACTION);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.putExtra("uri", imageUri);
         sendBroadcast(intent);
     }
