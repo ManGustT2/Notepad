@@ -98,6 +98,7 @@ public class NoteEnterFragment extends BaseFragment {
     // TODO: 02.12.2016 что делает строчка UriFilt.addCategory(Intent.CATEGORY_DEFAULT)
     @Override
     public void onResume(){
+        super.onResume();
         myReceiver = new MyReceiver();
         IntentFilter UriFilt = new IntentFilter(BROADCAST_ACTION);
         UriFilt.addCategory(Intent.CATEGORY_DEFAULT);
