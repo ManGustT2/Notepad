@@ -49,6 +49,7 @@ public class NoteEnterFragment extends BaseFragment {
     private Note mNote;
     private ImageView mImageView;
     private ImageSaverService mImageSaverService;
+    private MyReceiver myReceiver;
 
     private ServiceConnection mConn = new ServiceConnection() {
         @Override
@@ -96,8 +97,8 @@ public class NoteEnterFragment extends BaseFragment {
 
     // TODO: 02.12.2016 что делает строчка UriFilt.addCategory(Intent.CATEGORY_DEFAULT)
     @Override
-    public void onPause(){
-        MyReceiver myReceiver = new MyReceiver();
+    public void onResume(){
+        myReceiver = new MyReceiver();
         IntentFilter UriFilt = new IntentFilter(BROADCAST_ACTION);
         UriFilt.addCategory(Intent.CATEGORY_DEFAULT);
         getActivity().registerReceiver(myReceiver, UriFilt);
@@ -139,6 +140,7 @@ public class NoteEnterFragment extends BaseFragment {
         super.onStop();
         getActivity().unbindService(mConn);
         hideKeyboard(getActivity(), getView());
+        getActivity().unregisterReceiver(myReceiver);
     }
 
 
