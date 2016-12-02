@@ -33,13 +33,13 @@ public class ImageSaverService extends Service {
         return mImageSaverServiceBinder;
     }
 
-    public void saveImage(final Uri imageUri) {
+    public void saveImage(final String imageUri) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 synchronized (Thread.currentThread()) {
                     File file = BitmapWorker.storeImage(getApplicationContext(),
-                            BitmapWorker.decodeFile(imageUri.toString()));
+                            BitmapWorker.decodeFile(imageUri));
                     notifyListeners(Uri.fromFile(file));
                 }
             }

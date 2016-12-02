@@ -92,12 +92,20 @@ public class NoteEnterFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
-        getActivity().registerReceiver(notifyclickedReceiver, intFilt);
+    }
+
+    // TODO: 02.12.2016 что делает строчка UriFilt.addCategory(Intent.CATEGORY_DEFAULT)
+    @Override
+    public void onPause(){
+        MyReceiver myReceiver = new MyReceiver();
+        IntentFilter UriFilt = new IntentFilter(BROADCAST_ACTION);
+        UriFilt.addCategory(Intent.CATEGORY_DEFAULT);
+        getActivity().registerReceiver(myReceiver, UriFilt);
     }
 
 
-    private BroadcastReceiver notifyclickedReceiver = new BroadcastReceiver() {
+    private class MyReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             Uri uri = intent.getParcelableExtra("uri");
@@ -210,7 +218,7 @@ public class NoteEnterFragment extends BaseFragment {
     private void createObject() {
         if (mSelectedImageUri != null) {
             if (mImageSaverService != null) {
-                mImageSaverService.saveImage(mSelectedImageUri);
+                mImageSaverService.saveImage(getPath(mSelectedImageUri));
                 mProgress = new ProgressDialog(getContext());
                 mProgress.setIndeterminate(true);
                 mProgress.setTitle("Saving...");
